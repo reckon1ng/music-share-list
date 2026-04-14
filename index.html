@@ -1,131 +1,236 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Lambda Picks — Editorial Noir</title><style>
-:root{{
-  --bg:radial-gradient(circle at 0% 0%, #1d1f27 0%, #0b0d12 35%), linear-gradient(180deg, #09090b, #111317);
-  --bg-noise:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
-  --panel:rgba(15,16,20,.84);
-  --panel2:rgba(20,22,27,.92);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lambda Picks — Atelier Mark</title>
+<style>
+:root {
+  --bg:radial-gradient(circle at top left,#172131 0,#0b0d11 52%),linear-gradient(180deg,#090b0e,#121720);
+  --panel:rgba(17,22,29,.92);
   --line:rgba(255,255,255,.08);
-  --line-soft:rgba(255,255,255,.045);
-  --text:#f4f4f2;
-  --muted:#a0a29f;
-  --soft:#e9e8e2;
-  --field-bg:rgba(255,255,255,.02);
-  --field-line:rgba(255,255,255,.06);
-  --accent-bg:#f2eee6;
-  --accent-text:#111110;
-  --secondary-bg:rgba(255,255,255,.03);
-  --ghost-text:#b1b2ae;
-  --brand-fill:#f4efe7;
-  --brand-text:#151311;
-  --brand-border:rgba(255,245,232,.22);
-  --preview-bg:linear-gradient(180deg,#121317,#0d0e12);
-  --preview-panel:rgba(255,255,255,.025);
-  --preview-line:rgba(255,255,255,.06);
-  --badge-bg:#efe7d9;
-  --badge-text:#171411;
-  --shadow:0 24px 70px rgba(0,0,0,.38);
-  --title-font:Georgia, "Times New Roman", serif;
-  --brand-font:Inter, Segoe UI, Arial, sans-serif;
-  --heading-weight:700;
-  --radius-big:30px;
-  --radius-mid:22px;
-  --radius-small:16px;
-  --title-size:58px;
-  --title-tracking:-0.03em;
-  --card-fill:rgba(255,255,255,.02);
-  --card-stroke:rgba(255,255,255,.055);
-  --hairline:rgba(255,255,255,.045);
-}}
-*{{box-sizing:border-box}}
-html,body{{margin:0}}
-body{{font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);background:var(--bg);min-height:100vh;position:relative}}
-body::before{{content:'';position:fixed;inset:0;background:var(--bg-noise);pointer-events:none;opacity:.9}}
-body.preview-mode{{background:transparent}}
-body.preview-mode::before{{display:none}}
-.shell{{position:relative;z-index:1;width:min(1280px,calc(100vw - 28px));margin:24px auto 40px;display:grid;grid-template-columns:420px minmax(0,1fr);gap:22px}}
-.panel{{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-big);box-shadow:var(--shadow);backdrop-filter:blur(14px)}}
-.side{{position:sticky;top:18px;align-self:start;overflow:hidden}}
-.section{{padding:24px}}
-.hero{{display:grid;gap:18px;padding-bottom:20px;border-bottom:1px solid var(--hairline)}}
-.brand-row{{display:flex;justify-content:flex-start}}
-.brand-mark{{display:inline-flex;align-items:center;justify-content:center;padding:10px 15px;border-radius:999px;border:1px solid var(--brand-border);background:var(--brand-fill);color:var(--brand-text);font-family:var(--brand-font);font-size:15px;font-weight:900;letter-spacing:.06em;box-shadow:inset 0 1px 0 rgba(255,255,255,.16)}}
-.hero-head{{margin:0;font-family:var(--title-font);font-size:34px;line-height:1.02;letter-spacing:-.04em;font-weight:var(--heading-weight)}}
-.hero-copy{{margin:0;color:var(--muted);font-size:14px;line-height:1.72;max-width:34ch}}
-.form-shell{{display:grid;gap:18px}}
-.form-block{{display:grid;gap:14px;padding:18px;border-radius:calc(var(--radius-mid) + 2px);background:linear-gradient(180deg,var(--panel2),rgba(255,255,255,.01));border:1px solid var(--line-soft)}}
-.block-head{{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--hairline)}}
-.block-title{{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}}
-.field-stack{{display:grid;gap:12px}}
-.field-card{{padding:14px;border-radius:var(--radius-small);background:var(--field-bg);border:1px solid var(--field-line);display:grid;gap:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.015)}}
-.field-card label{{font-size:12px;font-weight:800;color:var(--soft);letter-spacing:.02em}}
-.field-card input[type="text"], .field-card textarea, .field-card select{{width:100%;border:none;background:transparent;color:var(--text);font-size:15px;outline:none;padding:0;font-family:inherit}}
-.field-card textarea{{min-height:96px;resize:vertical;line-height:1.65}}
-.field-card input::placeholder,.field-card textarea::placeholder{{color:transparent}}
-.select-wrap{{position:relative}}
-.select-wrap::after{{content:'⌄';position:absolute;right:2px;top:50%;transform:translateY(-54%);color:var(--soft);pointer-events:none;font-size:18px;line-height:1}}
-.field-card select{{appearance:none;-webkit-appearance:none;-moz-appearance:none;padding-right:24px;background-color:var(--field-bg);color:var(--text);color-scheme:dark}}
-.field-card select option{{background:#11161d;color:#f5f7fb}}
-.thumb-row{{display:flex;gap:12px;align-items:center;flex-wrap:wrap}}
-.file-btn{{position:relative;display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;min-height:44px;border-radius:14px;border:1px dashed var(--field-line);background:rgba(255,255,255,.012);cursor:pointer;color:var(--soft);font-weight:700}}
-.file-btn input{{position:absolute;inset:0;opacity:0;cursor:pointer}}
-.thumb-preview{{width:76px;height:76px;border-radius:16px;display:none;object-fit:cover;border:1px solid var(--field-line)}}
-.thumb-name,.status{{font-size:13px;color:var(--muted)}}
-.actions{{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}}
-.btn{{appearance:none;border:none;border-radius:16px;padding:13px 16px;font-size:14px;font-weight:800;cursor:pointer;transition:transform .12s ease,opacity .18s ease, filter .18s ease;font-family:inherit}}
-.btn:hover{{transform:translateY(-1px);filter:brightness(1.02)}}
-.primary{{background:var(--accent-bg);color:var(--accent-text)}}
-.secondary{{background:var(--secondary-bg);color:var(--text);border:1px solid var(--line)}}
-.ghost{{background:transparent;color:var(--ghost-text);border:1px solid var(--line)}}
-.stack{{display:grid;gap:22px}}
-.section-head{{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:18px}}
-.section-title{{font-size:20px;font-weight:800;letter-spacing:-.02em}}
-.section-sub{{font-size:13px;color:var(--muted);margin-top:4px}}
-.draft-list,.share-items{{display:grid;gap:14px}}
-.draft-item,.share-item{{display:grid;grid-template-columns:32px 84px 1fr auto;gap:16px;align-items:start;padding:16px;border-radius:var(--radius-mid);background:var(--card-fill);border:1px solid var(--card-stroke)}}
-.share-item{{grid-template-columns:108px 1fr}}
-.drag-handle{{align-self:stretch;display:flex;align-items:center;justify-content:center;border-radius:16px;border:1px dashed var(--field-line);background:rgba(255,255,255,.01);color:var(--muted);font-size:16px;font-weight:800;cursor:grab;user-select:none;touch-action:none;min-height:84px}}
-.drag-handle:active{{cursor:grabbing}}
-.draft-item.dragging{{opacity:.45;border-color:rgba(255,255,255,.2)}}
-.draft-cover,.share-cover{{width:84px;height:84px;border-radius:18px;object-fit:cover;background:rgba(255,255,255,.02);border:1px solid var(--field-line)}}
-.share-cover{{width:108px;height:108px;border-radius:22px}}
-.share-cover-wrap{{display:flex;align-items:flex-start}}
-.draft-noimg,.share-noimg{{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;text-align:center;padding:8px}}
-.draft-main,.share-meta{{display:grid;gap:10px;min-width:0}}
-.meta-head{{display:grid;gap:8px;align-content:start}}
-.badge{{display:inline-flex;width:max-content;align-items:center;justify-content:center;padding:6px 12px;border-radius:999px;background:var(--badge-bg);color:var(--badge-text);font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}}
-.draft-name,.share-name{{margin:0;font-family:var(--title-font);font-size:20px;line-height:1.08;letter-spacing:-.03em;font-weight:var(--heading-weight);word-break:break-word}}
-.share-name{{font-size:22px}}
-.draft-reason,.share-reason{{margin:0;color:var(--muted);font-size:14px;line-height:1.62;word-break:break-word}}
-.remove-btn{{padding:10px 12px;border-radius:14px;border:1px solid var(--field-line);background:transparent;color:#efc0c0;cursor:pointer;font-weight:700}}
-.count{{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.02);border:1px solid var(--line);font-size:12px;font-weight:800;color:var(--soft)}}
-.preview-panel .section{{padding:24px}}
-.share-board{{position:relative;display:grid;gap:16px;padding:22px;border-radius:calc(var(--radius-big) - 2px);background:var(--preview-bg);border:1px solid var(--preview-line);overflow:hidden;min-height:520px}}
-.share-board::before{{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0) 30%);pointer-events:none}}
-.board-brand{{position:absolute;top:20px;right:20px;display:inline-flex;align-items:center;justify-content:center;padding:8px 13px;border-radius:999px;border:1px solid var(--brand-border);background:var(--brand-fill);color:var(--brand-text);font-size:11px;font-weight:900;letter-spacing:.08em}}
-.board-header{{display:grid;gap:12px;padding:8px 6px 18px;border-bottom:1px solid var(--preview-line)}}
-.board-title{{margin:0;max-width:min(80%,900px);font-family:var(--title-font);font-size:var(--title-size);line-height:1.01;letter-spacing:var(--title-tracking);color:var(--text);font-weight:var(--heading-weight)}}
-.board-sub{{margin:0;color:var(--muted);font-size:15px;line-height:1.6}}
-.board-foot{{text-align:right;color:var(--muted);font-size:13px}}
-.empty-state{{padding:18px;border-radius:18px;background:rgba(255,255,255,.02);border:1px dashed var(--line);color:var(--muted);text-align:center}}
-.empty-state.large{{padding:48px 18px}}
-@media (max-width: 980px){{
-  .shell{{grid-template-columns:1fr}}
-  .side{{position:static}}
-  .actions{{grid-template-columns:1fr}}
-  .draft-item{{grid-template-columns:28px 72px 1fr}}
-  .share-item{{grid-template-columns:72px 1fr}}
-  .remove-btn{{grid-column:3/4;justify-self:start}}
-  .drag-handle{{min-height:72px}}
-  .board-title{{max-width:100%;font-size:40px}}
-  .board-brand{{position:static;justify-self:start}}
-}}
-body.preview-mode .shell{{grid-template-columns:1fr;max-width:1180px;width:min(1180px,calc(100vw - 20px));margin:10px auto}}
-body.preview-mode .side, body.preview-mode .queue-panel, body.preview-mode .preview-panel .section-head{{display:none}}
-body.preview-mode .preview-panel>.section{{padding:0;border:0}}
-body.preview-mode .preview-panel{{background:transparent;border:none;box-shadow:none}}
-body.preview-mode .share-board{{min-height:660px}}
-.board-title,.hero-head{font-family:Georgia, "Times New Roman", serif}.brand-mark{letter-spacing:.04em}.field-card label,.block-title{letter-spacing:.14em}
-</style></head><body><div class="shell"><aside class="panel side"><div class="section hero"><div class="brand-row"><div class="brand-mark">Lambda Picks</div></div><h1 class="hero-head">Curate a sharp recommendation image.</h1><p class="hero-copy">Music, films, series, games, anime, or anything else worth putting on one clean card.</p></div><div class="section form-shell"><section class="form-block"><div class="block-head"><div class="block-title">Collection</div></div><div class="field-stack"><div class="field-card"><label for="listTitle">Collection title</label><input id="listTitle" type="text" /></div></div></section><section class="form-block"><div class="block-head"><div class="block-title">Item details</div></div><div class="field-stack"><div class="field-card"><label for="itemCategory">Category</label><div class="select-wrap"><select id="itemCategory"><option value="music">Music</option><option value="film">Film</option><option value="series">Series</option><option value="game">Game</option><option value="anime">Anime</option><option value="other">Other</option></select></div></div><div class="field-card"><label for="itemName">Item title</label><input id="itemName" type="text" /></div><div class="field-card"><label for="itemReason">Why recommend it</label><textarea id="itemReason"></textarea></div><div class="field-card"><label>Thumbnail</label><div class="thumb-row"><label class="file-btn"><span>Choose image</span><input id="thumbInput" type="file" accept="image/*" /></label><img id="thumbPreview" class="thumb-preview" alt="thumbnail preview" /></div><div id="thumbName" class="thumb-name">No image selected</div></div></div></section><div class="actions"><button class="btn primary" id="addBtn">Add item</button><button class="btn secondary" id="shareBtn">Export image</button><button class="btn ghost" id="clearBtn">Clear all</button></div><div id="status" class="status">Ready.</div></div></aside><main class="stack"><section class="panel section queue-panel"><div class="section-head"><div><div class="section-title">Queue</div><div class="section-sub">Drag items to reorder</div></div><div id="count" class="count">0 items</div></div><div id="draftList" class="draft-list"></div></section><section class="panel preview-panel"><div class="section"><div class="section-head"><div><div class="section-title">Share preview</div><div class="section-sub">Preview updates automatically</div></div></div><div id="shareBoard" class="share-board"></div></div></section></main></div><script>const THEME = {"storageSuffix": "premium_editorial_noir", "export_bg_top": "#0e0f13", "export_bg_bottom": "#17191f", "export_panel_fill": "rgba(255,255,255,.025)", "export_panel_stroke": "rgba(255,255,255,.07)", "export_card_fill": "rgba(255,255,255,.02)", "export_card_stroke": "rgba(255,255,255,.05)", "export_heading": "#f5f4ef", "export_body": "#d5d1c7", "export_muted": "#a7a79f", "export_empty": "#181a1f", "export_badge_bg": "#efe7d9", "export_badge_text": "#171411", "export_brand_bg": "#f4efe7", "export_brand_text": "#151311", "export_brand_line": "rgba(255,245,232,.22)"}; const STORAGE_KEY = '__lambda_picks_refresh__' + THEME.storageSuffix; const DEMO_MODE = new URLSearchParams(location.search).get('demo') === '1'; const PREVIEW_MODE = new URLSearchParams(location.search).get('preview') === '1'; if (PREVIEW_MODE) document.body.classList.add('preview-mode'); const SAMPLE_DATA = {"title": "Shaw's picks", "items": [{"category": "film", "name": "Blade Runner 2049", "reason": "Pure atmosphere, controlled pacing, and visual worldbuilding that lingers.", "thumb": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20600%20600%22%3E%0A%20%20%20%20%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%230f2037%22/%3E%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%231f5c7a%22/%3E%3C/linearGradient%3E%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%22600%22%20height%3D%22600%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22500%22%20cy%3D%2290%22%20r%3D%2280%22%20fill%3D%22%23f3f7fb%22%20opacity%3D%220.12%22/%3E%0A%20%20%20%20%3Crect%20x%3D%2252%22%20y%3D%2252%22%20width%3D%22496%22%20height%3D%22496%22%20rx%3D%2242%22%20fill%3D%22none%22%20stroke%3D%22%23f3f7fb%22%20opacity%3D%220.22%22/%3E%0A%20%20%20%20%3Ctext%20x%3D%2260%22%20y%3D%22420%22%20fill%3D%22%23f3f7fb%22%20font-family%3D%22Inter%2C%20Arial%2C%20sans-serif%22%20font-size%3D%2278%22%20font-weight%3D%22800%22%3E2049%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2262%22%20y%3D%22486%22%20fill%3D%22%23f3f7fb%22%20opacity%3D%220.72%22%20font-family%3D%22Inter%2C%20Arial%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22600%22%3EFILM%3C/text%3E%0A%20%20%20%20%3C/svg%3E"}, {"category": "game", "name": "Half-Life 2", "reason": "Still one of the cleanest examples of level rhythm, momentum, and restraint.", "thumb": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20600%20600%22%3E%0A%20%20%20%20%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23131313%22/%3E%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%239a5c06%22/%3E%3C/linearGradient%3E%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%22600%22%20height%3D%22600%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22500%22%20cy%3D%2290%22%20r%3D%2280%22%20fill%3D%22%23fff4d8%22%20opacity%3D%220.12%22/%3E%0A%20%20%20%20%3Crect%20x%3D%2252%22%20y%3D%2252%22%20width%3D%22496%22%20height%3D%22496%22%20rx%3D%2242%22%20fill%3D%22none%22%20stroke%3D%22%23fff4d8%22%20opacity%3D%220.22%22/%3E%0A%20%20%20%20%3Ctext%20x%3D%2260%22%20y%3D%22420%22%20fill%3D%22%23fff4d8%22%20font-family%3D%22Inter%2C%20Arial%2C%20sans-serif%22%20font-size%3D%2278%22%20font-weight%3D%22800%22%3EHL2%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2262%22%20y%3D%22486%22%20fill%3D%22%23fff4d8%22%20opacity%3D%220.72%22%20font-family%3D%22Inter%2C%20Arial%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22600%22%3EGAME%3C/text%3E%0A%20%20%20%20%3C/svg%3E"}, {"category": "music", "name": "Nujabes — Modal Soul", "reason": "Elegant, weightless, and instantly sets a late-night tone without trying too hard.", "thumb": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20600%20600%22%3E%0A%20%20%20%20%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%231f1728%22/%3E%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%236b3d76%22/%3E%3C/linearGradient%3E%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%22600%22%20height%3D%22600%22%20fill%3D%22url%28%23g%29%22/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22500%22%20cy%3D%2290%22%20r%3D%2280%22%20fill%3D%22%23f4e9ff%22%20opacity%3D%220.12%22/%3E%0A%20%20%20%20%3Crect%20x%3D%2252%22%20y%3D%2252%22%20width%3D%22496%22%20height%3D%22496%22%20rx%3D%2242%22%20fill%3D%22none%22%20stroke%3D%22%23f4e9ff%22%20opacity%3D%220.22%22/%3E%0A%20%20%20%20%3Ctext%20x%3D%2260%22%20y%3D%22420%22%20fill%3D%22%23f4e9ff%22%20font-family%3D%22Inter%2C%20Arial%2C%20sans-serif%22%20font-size%3D%2278%22%20font-weight%3D%22800%22%3EMS%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2262%22%20y%3D%22486%22%20fill%3D%22%23f4e9ff%22%20opacity%3D%220.72%22%20font-family%3D%22Inter%2C%20Arial%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22600%22%3EMUSIC%3C/text%3E%0A%20%20%20%20%3C/svg%3E"}]}; let items = [];
+  --text:#f4f7fb;
+  --muted:#9aa6b8;
+  --soft:#d7dce4;
+  --field-bg:#141b24;
+  --field-line:rgba(255,255,255,.08);
+  --accent-bg:#edf2f8;
+  --accent-text:#10141a;
+  --button-secondary:#242c36;
+  --button-ghost:#94a1b3;
+  --danger:#ffb4b4;
+  --preview-bg:linear-gradient(180deg,#10141b,#0c1016);
+  --preview-panel:rgba(255,255,255,.03);
+  --preview-line:rgba(255,255,255,.08);
+  --badge-bg:#f2f5f8;
+  --badge-text:#11161d;
+  --brand-fill:#f4f6f8;
+  --brand-text:#0f1318;
+  --brand-border:rgba(255,255,255,.34);
+  --title-size:52px;
+  --hero-brand-size:18px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);background:var(--bg);min-height:100vh}
+body.preview-mode{background:transparent}
+.shell{width:min(1240px,calc(100vw - 28px));margin:24px auto 40px;display:grid;grid-template-columns:410px minmax(0,1fr);gap:20px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:30px;box-shadow:0 24px 64px rgba(0,0,0,.24);backdrop-filter:blur(9px)}
+.side{position:sticky;top:18px;align-self:start;overflow:hidden}
+.section{padding:24px}
+.hero{padding-bottom:18px;border-bottom:1px solid var(--line);display:grid;gap:18px}
+.brand-row{display:flex;justify-content:flex-start}
+.brand-mark{display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:999px;border:1px solid var(--brand-border);background:var(--brand-fill);color:var(--brand-text);font-size:var(--hero-brand-size);font-weight:900;letter-spacing:.08em;text-transform:uppercase;box-shadow:inset 0 1px 0 rgba(255,255,255,.15)}
+.hero-copy{margin:0;color:var(--muted);font-size:14px;line-height:1.75;max-width:34ch}
+.form-shell{display:grid;gap:18px}
+.form-block{display:grid;gap:14px;padding:18px;border-radius:24px;background:rgba(255,255,255,.018);border:1px solid var(--line)}
+.block-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.block-title{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.field-stack{display:grid;gap:12px}
+.field-card{padding:14px 14px 13px;border-radius:18px;background:var(--field-bg);border:1px solid var(--field-line);display:grid;gap:10px}
+.field-card label{font-size:13px;font-weight:700;color:var(--soft)}
+.field-card input[type="text"], .field-card textarea, .field-card select{width:100%;border:none;background:transparent;color:var(--text);font-size:15px;outline:none;padding:0;font-family:inherit}
+.field-card textarea{min-height:96px;resize:vertical;line-height:1.65}
+.field-card input::placeholder,.field-card textarea::placeholder{color:transparent}
+.select-wrap{position:relative}
+.select-wrap::after{content:'⌄';position:absolute;right:2px;top:50%;transform:translateY(-54%);color:var(--soft);pointer-events:none;font-size:18px;line-height:1}
+.field-card select{appearance:none;-webkit-appearance:none;-moz-appearance:none;padding-right:24px;background-color:var(--field-bg);color-scheme:dark}
+.field-card select option{background:#0f141b;color:#f2f6fb}
+.thumb-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.file-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;min-height:44px;border-radius:14px;border:1px dashed var(--field-line);background:rgba(255,255,255,.01);cursor:pointer;color:var(--soft);font-weight:700}
+.file-btn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.thumb-preview{width:72px;height:72px;border-radius:16px;display:none;object-fit:cover;border:1px solid var(--field-line)}
+.thumb-name,.status,.section-sub,.count{color:var(--muted)}
+.actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.btn{appearance:none;border:none;border-radius:16px;padding:13px 16px;font-size:14px;font-weight:800;cursor:pointer;transition:transform .12s ease,opacity .18s ease;font-family:inherit}
+.btn:hover{transform:translateY(-1px)}
+.primary{background:var(--accent-bg);color:var(--accent-text)}
+.secondary{background:var(--button-secondary);color:var(--text);border:1px solid var(--line)}
+.ghost{background:transparent;color:var(--button-ghost);border:1px solid var(--line)}
+.stack{display:grid;gap:20px}
+.section-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:18px}
+.section-title{font-size:20px;font-weight:800;letter-spacing:-.02em}
+.draft-list,.share-items{display:grid;gap:14px}
+.draft-item,.share-item{display:grid;grid-template-columns:32px 84px 1fr auto;gap:16px;align-items:start;padding:16px;border-radius:24px;background:rgba(255,255,255,.02);border:1px solid var(--line)}
+.share-item{grid-template-columns:108px 1fr}
+.drag-handle{align-self:stretch;display:flex;align-items:center;justify-content:center;border-radius:16px;border:1px dashed rgba(255,255,255,.1);background:rgba(255,255,255,.015);color:var(--muted);font-size:16px;font-weight:800;cursor:grab;user-select:none;touch-action:none;min-height:84px}
+.drag-handle:active{cursor:grabbing}
+.draft-item.dragging{opacity:.45;border-color:rgba(255,255,255,.2)}
+.draft-item.drop-target{border-color:rgba(255,255,255,.32);background:rgba(255,255,255,.05)}
+.share-item{grid-template-columns:108px 1fr}
+.draft-cover,.share-cover{width:84px;height:84px;border-radius:18px;object-fit:cover;background:rgba(255,255,255,.02);border:1px solid var(--field-line)}
+.share-cover{width:108px;height:108px;border-radius:22px}
+.share-cover-wrap{display:flex;align-items:flex-start}
+.draft-noimg,.share-noimg{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;text-align:center;padding:8px}
+.draft-meta,.share-meta{min-width:0;display:grid;gap:12px}
+.meta-head{display:grid;gap:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.06)}
+.badge{display:inline-flex;align-items:center;align-self:start;width:max-content;padding:6px 10px;border-radius:999px;background:var(--badge-bg);color:var(--badge-text);font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+.draft-title,.share-name{margin:0;font-size:22px;line-height:1.15;letter-spacing:-.025em;word-break:break-word}
+.share-name{font-size:34px}
+.draft-reason,.share-reason{margin:0;color:#cad3df;line-height:1.65;font-size:14px;word-break:break-word}
+.share-reason{font-size:15px}
+.remove-btn{appearance:none;border:none;background:transparent;color:var(--danger);border:1px solid rgba(255,180,180,.24);border-radius:14px;padding:10px 12px;font-weight:700;cursor:pointer}
+.share-board{position:relative;display:grid;gap:16px;padding:22px;border-radius:28px;background:var(--preview-bg);border:1px solid var(--line);overflow:hidden}
+.board-brand{position:absolute;top:20px;right:20px;display:inline-flex;align-items:center;justify-content:center;padding:8px 13px;border-radius:999px;border:1px solid var(--brand-border);background:var(--brand-fill);color:var(--brand-text);font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+.board-header{display:grid;gap:12px;padding:10px 6px 18px;border-bottom:1px solid var(--preview-line)}
+.board-title{margin:0;max-width:min(82%,900px);font-size:var(--title-size);line-height:1.02;letter-spacing:-.046em;color:#f5f7fb}
+.board-sub{margin:0;color:var(--muted);font-size:15px;line-height:1.6}
+.board-foot{text-align:right;color:var(--muted);font-size:13px}
+.empty-state{padding:18px;border-radius:18px;background:rgba(255,255,255,.02);border:1px dashed var(--line);color:var(--muted);text-align:center}
+.empty-state.large{padding:48px 18px}
+@media (max-width: 980px){
+  .shell{grid-template-columns:1fr}
+  .side{position:static}
+  .actions{grid-template-columns:1fr}
+  .draft-item{grid-template-columns:28px 72px 1fr}
+  .share-item{grid-template-columns:72px 1fr}
+  .remove-btn{grid-column:3/4;justify-self:start}
+  .drag-handle{min-height:72px}
+  .board-title{max-width:100%;font-size:40px}
+  .board-brand{position:static;justify-self:start}
+}
+body.preview-mode .shell{grid-template-columns:1fr;max-width:1100px;width:min(1100px,calc(100vw - 20px));margin:10px auto}
+body.preview-mode .side, body.preview-mode .queue-panel, body.preview-mode .preview-panel .section-head{display:none}
+body.preview-mode .preview-panel>.section{padding:0;border:0}
+body.preview-mode .preview-panel{background:transparent;border:none;box-shadow:none}
+body.preview-mode .share-board{min-height:660px}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="panel side">
+    <div class="section hero">
+      <div class="brand-row"><div class="brand-mark">Lambda Picks</div></div>
+      <p class="hero-copy">Create a clean recommendation image for music, films, series, games, anime, and anything else worth sharing.</p>
+    </div>
+    <div class="section form-shell">
+      <section class="form-block">
+        <div class="block-head"><div class="block-title">Collection</div></div>
+        <div class="field-stack">
+          <div class="field-card">
+            <label for="listTitle">Collection title</label>
+            <input id="listTitle" type="text" />
+          </div>
+        </div>
+      </section>
+      <section class="form-block">
+        <div class="block-head"><div class="block-title">Item details</div></div>
+        <div class="field-stack">
+          <div class="field-card">
+            <label for="itemCategory">Category</label>
+            <div class="select-wrap">
+              <select id="itemCategory">
+                <option value="music">Music</option>
+                <option value="film">Film</option>
+                <option value="series">Series</option>
+                <option value="game">Game</option>
+                <option value="anime">Anime</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-card">
+            <label for="itemName">Item title</label>
+            <input id="itemName" type="text" />
+          </div>
+          <div class="field-card">
+            <label for="itemReason">Why recommend it</label>
+            <textarea id="itemReason"></textarea>
+          </div>
+          <div class="field-card">
+            <label>Thumbnail</label>
+            <div class="thumb-row">
+              <label class="file-btn">
+                <span>Choose image</span>
+                <input id="thumbInput" type="file" accept="image/*" />
+              </label>
+              <img id="thumbPreview" class="thumb-preview" alt="thumbnail preview" />
+            </div>
+            <div id="thumbName" class="thumb-name">No image selected</div>
+          </div>
+        </div>
+      </section>
+      <div class="actions">
+        <button class="btn primary" id="addBtn">Add item</button>
+        <button class="btn secondary" id="shareBtn">Export image</button>
+        <button class="btn ghost" id="clearBtn">Clear all</button>
+      </div>
+      <div id="status" class="status">Ready.</div>
+    </div>
+  </aside>
+
+  <main class="stack">
+    <section class="panel section queue-panel">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Queue</div>
+          <div class="section-sub">Drag items to reorder</div>
+        </div>
+        <div id="count" class="count">0 items</div>
+      </div>
+      <div id="draftList" class="draft-list"></div>
+    </section>
+
+    <section class="panel preview-panel">
+      <div class="section">
+        <div class="section-head">
+          <div>
+            <div class="section-title">Share preview</div>
+            <div class="section-sub">Preview updates automatically</div>
+          </div>
+        </div>
+        <div id="shareBoard" class="share-board"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+const THEME = {
+  storageSuffix: "atelier_mark",
+  export_bg_top: "#0d1218",
+  export_bg_bottom: "#141a22",
+  export_panel_fill: "rgba(255,255,255,.03)",
+  export_panel_stroke: "rgba(255,255,255,.08)",
+  export_card_fill: "rgba(255,255,255,.03)",
+  export_card_stroke: "rgba(255,255,255,.08)",
+  export_heading: "#f5f7fb",
+  export_body: "#cad3df",
+  export_muted: "#9aa6b8",
+  export_empty: "#171c23",
+  export_badge_bg: "#f2f5f8",
+  export_badge_text: "#11161d",
+  export_brand_bg: "#f4f6f8",
+  export_brand_text: "#0f1318",
+  export_brand_line: "rgba(255,255,255,.34)"
+};
+const STORAGE_KEY = '__lambda_picks_refresh__' + THEME.storageSuffix;
+const DEMO_MODE = new URLSearchParams(location.search).get('demo') === '1';
+const PREVIEW_MODE = new URLSearchParams(location.search).get('preview') === '1';
+if (PREVIEW_MODE) document.body.classList.add('preview-mode');
+const SAMPLE_DATA = {"title": "Shaw's picks", "items": [{"category": "film", "name": "Blade Runner 2049", "reason": "Dense atmosphere, surgical pacing, and a world that keeps expanding after the credits.", "thumb": "https://picsum.photos/seed/bladerunner/600/600"}, {"category": "game", "name": "Half-Life 2", "reason": "Still absurdly sharp in rhythm, level flow, and visual storytelling.", "thumb": "https://picsum.photos/seed/halflife/600/600"}]};
+
+let items = [];
 let currentThumb = '';
 
 const listTitleEl = document.getElementById('listTitle');
@@ -270,15 +375,15 @@ function renderDraftList() {
 }
 function renderShareBoard() {
   const title = listTitleEl.value.trim() || 'Untitled collection';
-  const countText = `${items.length} ${items.length === 1 ? 'item' : 'items'} in collection`;
+  const countText = `${items.length} ${items.length === 1 ? 'item' : 'items'} · ready to share`;
   if (!items.length) {
     shareBoardEl.innerHTML = `
       <div class="board-brand">Lambda Picks</div>
       <div class="board-header">
         <h2 class="board-title">${escapeHtml(title)}</h2>
-        <p class="board-sub">Add items and the image updates automatically.</p>
+        <p class="board-sub">Add items and your share image will update here automatically.</p>
       </div>
-      <div class="empty-state large">Your collection preview will appear here.</div>
+      <div class="empty-state large">Your share image preview will appear here.</div>
       <div class="board-foot">Made with Lambda Picks</div>
     `;
     return;
@@ -608,4 +713,6 @@ shareBtn.addEventListener('click', async () => {
 load();
 renderDraftList();
 renderShareBoard();
- </script></body></html>
+</script>
+</body>
+</html>
