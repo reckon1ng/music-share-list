@@ -3,32 +3,32 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Lambda Picks — Editorial Signal</title>
+<title>Lambda Picks — Atelier Mark</title>
 <style>
 :root {
-  --bg:radial-gradient(circle at top left,#1b2232 0,#0c0e12 55%),linear-gradient(180deg,#0b0b0d,#15171d);
-  --panel:rgba(18,19,24,.92);
-  --line:rgba(255,255,255,.07);
-  --text:#f5f2ee;
-  --muted:#a59d95;
-  --soft:#e3dad2;
-  --field-bg:#14151a;
-  --field-line:rgba(255,255,255,.07);
-  --accent-bg:#f0e8df;
-  --accent-text:#16110d;
-  --button-secondary:#28221d;
-  --button-ghost:#b3a89f;
-  --danger:#ffd1cb;
-  --preview-bg:linear-gradient(180deg,#111216,#0d0e12);
-  --preview-panel:rgba(255,255,255,.022);
-  --preview-line:rgba(255,255,255,.07);
-  --badge-bg:#f1e9e0;
-  --badge-text:#17120f;
-  --brand-fill:#f2ebe3;
-  --brand-text:#17120f;
-  --brand-border:rgba(255,255,255,.18);
-  --title-size:56px;
-  --hero-brand-size:16px;
+  --bg:radial-gradient(circle at top left,#172131 0,#0b0d11 52%),linear-gradient(180deg,#090b0e,#121720);
+  --panel:rgba(17,22,29,.92);
+  --line:rgba(255,255,255,.08);
+  --text:#f4f7fb;
+  --muted:#9aa6b8;
+  --soft:#d7dce4;
+  --field-bg:#141b24;
+  --field-line:rgba(255,255,255,.08);
+  --accent-bg:#edf2f8;
+  --accent-text:#10141a;
+  --button-secondary:#242c36;
+  --button-ghost:#94a1b3;
+  --danger:#ffb4b4;
+  --preview-bg:linear-gradient(180deg,#10141b,#0c1016);
+  --preview-panel:rgba(255,255,255,.03);
+  --preview-line:rgba(255,255,255,.08);
+  --badge-bg:#f2f5f8;
+  --badge-text:#11161d;
+  --brand-fill:#f4f6f8;
+  --brand-text:#0f1318;
+  --brand-border:rgba(255,255,255,.34);
+  --title-size:52px;
+  --hero-brand-size:18px;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
@@ -114,13 +114,6 @@ body.preview-mode .side, body.preview-mode .queue-panel, body.preview-mode .prev
 body.preview-mode .preview-panel>.section{padding:0;border:0}
 body.preview-mode .preview-panel{background:transparent;border:none;box-shadow:none}
 body.preview-mode .share-board{min-height:660px}
-
-body{font-feature-settings:"ss01" 1}
-.brand-mark,.board-brand{border-radius:14px;padding:8px 12px;letter-spacing:.04em}
-.board-title,.draft-title,.share-name{font-family:Georgia,"Times New Roman",serif;font-weight:700;letter-spacing:-.04em}
-.hero-copy,.draft-reason,.share-reason,.board-sub{font-family:Georgia,"Times New Roman",serif}
-.badge{border-radius:12px}
-
 </style>
 </head>
 <body>
@@ -214,22 +207,22 @@ body{font-feature-settings:"ss01" 1}
 
 <script>
 const THEME = {
-  storageSuffix: "editorial_signal",
-  export_bg_top: "#111217",
-  export_bg_bottom: "#17181e",
-  export_panel_fill: "rgba(255,255,255,.022)",
-  export_panel_stroke: "rgba(255,255,255,.07)",
-  export_card_fill: "rgba(255,255,255,.025)",
-  export_card_stroke: "rgba(255,255,255,.07)",
-  export_heading: "#f6f1ea",
-  export_body: "#d7cdc3",
-  export_muted: "#ab9f93",
-  export_empty: "#1a1714",
-  export_badge_bg: "#f1e8dc",
-  export_badge_text: "#17120f",
-  export_brand_bg: "#f2ebe3",
-  export_brand_text: "#17120f",
-  export_brand_line: "rgba(255,255,255,.18)"
+  storageSuffix: "atelier_mark",
+  export_bg_top: "#0d1218",
+  export_bg_bottom: "#141a22",
+  export_panel_fill: "rgba(255,255,255,.03)",
+  export_panel_stroke: "rgba(255,255,255,.08)",
+  export_card_fill: "rgba(255,255,255,.03)",
+  export_card_stroke: "rgba(255,255,255,.08)",
+  export_heading: "#f5f7fb",
+  export_body: "#cad3df",
+  export_muted: "#9aa6b8",
+  export_empty: "#171c23",
+  export_badge_bg: "#f2f5f8",
+  export_badge_text: "#11161d",
+  export_brand_bg: "#f4f6f8",
+  export_brand_text: "#0f1318",
+  export_brand_line: "rgba(255,255,255,.34)"
 };
 const STORAGE_KEY = '__lambda_picks_refresh__' + THEME.storageSuffix;
 const DEMO_MODE = new URLSearchParams(location.search).get('demo') === '1';
@@ -541,7 +534,7 @@ async function drawShareCanvas() {
   const width = 1080;
   const padding = 42;
   const coverSize = 128;
-  const gap = 20;
+  const gap = 18;
   const innerPad = 18;
   const cardWidth = width - padding * 2;
   const textWidth = cardWidth - innerPad * 2 - coverSize - 24;
@@ -558,7 +551,7 @@ async function drawShareCanvas() {
     const nameLines = wrapText(ctx, item.name, textWidth);
     ctx.font = '400 24px Inter, Arial, sans-serif';
     const reasonLines = wrapText(ctx, item.reason, textWidth);
-    const textHeight = 104 + nameLines.length * 42 + 20 + reasonLines.length * 34;
+    const textHeight = 82 + nameLines.length * 42 + 18 + reasonLines.length * 34;
     const cardHeight = Math.max(coverSize, textHeight) + innerPad * 2;
     layouts.push({item, image:imageCache[i], y, cardHeight, nameLines, reasonLines});
     y += cardHeight + gap;
@@ -621,7 +614,7 @@ async function drawShareCanvas() {
     const textX = coverX + coverSize + 22;
     const badgeY = coverY + 8;
     const badge = drawCanvasCategory(g, categoryLabel(layout.item.category), textX, badgeY);
-    let textY = badgeY + badge.h + 42;
+    let textY = badgeY + badge.h + 34;
     g.fillStyle = THEME.export_heading;
     g.font = '700 34px Inter, Arial, sans-serif';
     layout.nameLines.forEach(line => {
@@ -717,24 +710,6 @@ shareBtn.addEventListener('click', async () => {
     setStatus('PNG downloaded.');
   }, 'image/png');
 });
-
-function seedDemoItems() {
-  items = [
-    {id: uid(), category:'film', name:'Blade Runner 2049', reason:'Vast, precise, and quietly devastating. Every frame feels designed with intent.', thumb:'./demo_film.png'},
-    {id: uid(), category:'series', name:'The Bear', reason:'Fast, intimate, and emotionally sharp. It feels modern without trying too hard.', thumb:'./demo_series.png'},
-    {id: uid(), category:'game', name:'NieR: Automata', reason:'Elegant systems, strong visual identity, and a tone that stays with you after the credits.', thumb:'./demo_game.png'}
-  ];
-  listTitleEl.value = "Shaw's picks";
-  currentThumb = '';
-  thumbPreview.src = '';
-  thumbPreview.style.display = 'none';
-  thumbNameEl.textContent = 'No image selected';
-  save();
-}
-if (location.hash === '#demo') {
-  seedDemoItems();
-}
-
 load();
 renderDraftList();
 renderShareBoard();
