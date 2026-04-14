@@ -1,620 +1,580 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Lambda Picks — Studio</title>
-      <style>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lambda Picks — Studio Refined</title>
+<style>
 :root{
-  --bg:#0b0d10;--bg-2:#111419;--panel:#14181e;--panel-2:#171c23;--line:rgba(255,255,255,.08);
-  --text:#f3f5f7;--muted:#9aa4b2;--soft:#cfd6e0;--chip:#e9edf3;--chip-text:#10141a;
-  --primary:#eff3f8;--primary-text:#0d1117;--danger:#ff9797;--radius:24px;--shadow:0 18px 46px rgba(0,0,0,.26);
+  --bg:radial-gradient(circle at top left,#18212b 0,#0b0d10 46%),linear-gradient(180deg,#090b0e,#10151b);--panel:rgba(18,22,28,.92);--line:rgba(255,255,255,.08);--text:#f4f7fb;--muted:#9ca8b8;--soft:#cfd8e3;
+  --field-bg:#151b22;--field-line:rgba(255,255,255,.08);--accent-bg:#eef3f8;--accent-text:#10141a;
+  --button-secondary:#242c36;--button-ghost:#98a5b7;--danger:#ffb0b0;
+  --preview-bg:linear-gradient(180deg,#11151b,#0f1319);--preview-card:rgba(255,255,255,.035);--preview-card-line:rgba(255,255,255,.08);
+  --badge-bg:#eef3f8;--badge-text:#10141a;--title-color:#f2f6fb;--reason-color:#c7cfdb;
+  --brand-bg:rgba(255,255,255,.02);--brand-line:rgba(255,255,255,.12);--brand-text:#b6c0cf;
 }
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);background:radial-gradient(circle at top left,#161b24 0,#0b0d10 48%),linear-gradient(180deg,#090b0e,#0f1318);min-height:100vh}
-.shell{width:min(1180px,calc(100vw - 28px));margin:26px auto 40px;display:grid;grid-template-columns:390px minmax(0,1fr);gap:20px}
-.panel{background:rgba(20,24,30,.92);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);background:var(--bg);min-height:100vh}
+body.preview-mode{background:transparent}
+.shell{width:min(1220px,calc(100vw - 28px));margin:24px auto 40px;display:grid;grid-template-columns:398px minmax(0,1fr);gap:20px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:28px;box-shadow:0 22px 56px rgba(0,0,0,.22);backdrop-filter:blur(8px)}
 .side{position:sticky;top:18px;align-self:start;overflow:hidden}
-.section{padding:22px}
-.hero{padding-bottom:18px;border-bottom:1px solid var(--line)}
-.eyebrow{display:inline-flex;padding:8px 12px;border:1px solid rgba(255,255,255,.1);border-radius:999px;color:var(--muted);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.section{padding:24px}
+.hero{padding-bottom:20px;border-bottom:1px solid var(--line)}
+.eyebrow{display:inline-flex;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
 h1{margin:16px 0 10px;font-size:34px;line-height:1.04;letter-spacing:-.035em}
-.hero-copy,.section-sub,.status,.thumb-name,.count{color:var(--muted)}
-.hero-copy{margin:0;font-size:14px;line-height:1.7}
-.form-grid{display:grid;gap:16px}
-.field label{display:block;margin-bottom:10px;font-size:13px;font-weight:700;letter-spacing:.01em;color:var(--soft)}
-input[type="text"],textarea,select{
-  width:100%;border-radius:18px;border:1px solid rgba(255,255,255,.08);background:#171c23;color:var(--text);
-  padding:14px 15px;font-size:15px;outline:none;transition:.18s ease;border-color .18s ease, box-shadow .18s ease
-}
-textarea{min-height:120px;resize:vertical;line-height:1.65}
-input[type="text"]:focus,textarea:focus,select:focus{border-color:#6f7b8b;box-shadow:0 0 0 4px rgba(255,255,255,.05)}
+.hero-copy{margin:0;color:var(--muted);font-size:14px;line-height:1.7}
+.form-shell{display:grid;gap:18px}
+.form-block{display:grid;gap:12px;padding:18px;border-radius:22px;background:rgba(255,255,255,.02);border:1px solid var(--line)}
+.block-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.block-title{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.block-note{font-size:12px;color:var(--muted)}
+.field-card{padding:14px;border-radius:18px;background:var(--field-bg);border:1px solid var(--field-line);display:grid;gap:10px}
+.field-card label{font-size:13px;font-weight:700;color:var(--soft)}
+.field-card input[type="text"], .field-card textarea, .field-card select{width:100%;border:none;background:transparent;color:var(--text);font-size:15px;outline:none;padding:0}
+.field-card textarea{min-height:88px;resize:vertical;line-height:1.65}
+.field-card input::placeholder,.field-card textarea::placeholder{color:var(--muted)}
 .thumb-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.file-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;min-height:46px;border-radius:16px;border:1px dashed #536072;background:#171c23;cursor:pointer}
+.file-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;min-height:44px;border-radius:14px;border:1px dashed var(--field-line);background:transparent;cursor:pointer}
 .file-btn input{position:absolute;inset:0;opacity:0;cursor:pointer}
-.thumb-preview{width:72px;height:72px;border-radius:16px;display:none;object-fit:cover;border:1px solid rgba(255,255,255,.08)}
-.thumb-name{font-size:13px}
+.thumb-preview{width:72px;height:72px;border-radius:16px;display:none;object-fit:cover;border:1px solid var(--field-line)}
+.thumb-name,.status,.section-sub,.count{color:var(--muted)}
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .btn{appearance:none;border:none;border-radius:16px;padding:13px 16px;font-size:14px;font-weight:800;cursor:pointer;transition:transform .12s ease,opacity .18s ease}
 .btn:hover{transform:translateY(-1px)}
-.primary{background:var(--primary);color:var(--primary-text)}
-.secondary{background:#252c35;color:var(--text);border:1px solid rgba(255,255,255,.1)}
-.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,.12)}
+.primary{background:var(--accent-bg);color:var(--accent-text)}
+.secondary{background:var(--button-secondary);color:var(--text);border:1px solid var(--line)}
+.ghost{background:transparent;color:var(--button-ghost);border:1px solid var(--line)}
 .stack{display:grid;gap:20px}
 .section-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:18px}
 .section-title{font-size:20px;font-weight:800;letter-spacing:-.02em}
 .draft-list,.share-items{display:grid;gap:14px}
-.draft-item,.share-item{display:grid;grid-template-columns:78px 1fr auto;gap:14px;align-items:start;padding:14px;border-radius:22px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06)}
-.share-item{grid-template-columns:96px 1fr}
-.draft-meta,.share-meta{min-width:0}
-.draft-cover,.share-cover{width:78px;height:78px;border-radius:18px;object-fit:cover;background:#11151b;border:1px solid rgba(255,255,255,.08)}
-.share-cover{width:96px;height:96px;border-radius:22px}
+.draft-item,.share-item{display:grid;grid-template-columns:84px 1fr auto;gap:16px;align-items:start;padding:16px;border-radius:24px;background:rgba(255,255,255,.02);border:1px solid var(--line)}
+.share-item{grid-template-columns:104px 1fr}
+.draft-cover,.share-cover{width:84px;height:84px;border-radius:18px;object-fit:cover;background:rgba(255,255,255,.02);border:1px solid var(--field-line)}
+.share-cover{width:104px;height:104px;border-radius:20px}
 .draft-noimg,.share-noimg{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;text-align:center;padding:8px}
-.badge{display:inline-flex;padding:6px 10px;border-radius:999px;background:#eff3f8;color:#10141a;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
-.draft-title,.share-name{margin:10px 0 8px;font-size:20px;line-height:1.2;letter-spacing:-.02em}
-.share-name{font-size:26px}
-.draft-reason,.share-reason{margin:0;color:#c6ceda;line-height:1.65;font-size:14px}
+.draft-meta,.share-meta{min-width:0;display:grid;gap:12px}
+.meta-head{display:grid;gap:10px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.badge{display:inline-flex;align-items:center;align-self:start;width:max-content;padding:6px 10px;border-radius:999px;background:var(--badge-bg);color:var(--badge-text);font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.draft-title,.share-name{margin:0;font-size:21px;line-height:1.15;letter-spacing:-.025em;word-break:break-word;color:var(--title-color)}
+.share-name{font-size:32px}
+.draft-reason,.share-reason{margin:0;color:var(--reason-color);line-height:1.65;font-size:14px;word-break:break-word}
 .share-reason{font-size:15px}
-.remove-btn{appearance:none;border:none;background:transparent;color:#ffb0b0;border:1px solid rgba(255,176,176,.24);border-radius:14px;padding:10px 12px;font-weight:700;cursor:pointer}
-.share-board{display:grid;gap:16px}
-.board-header{padding:10px 4px 6px}
-.board-chip{display:inline-flex;padding:8px 12px;border-radius:999px;background:#eff3f8;color:#10141a;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
-.board-title{margin:16px 0 10px;font-size:40px;line-height:1.02;letter-spacing:-.04em}
+.remove-btn{appearance:none;border:none;background:transparent;color:var(--danger);border:1px solid rgba(255,176,176,.22);border-radius:14px;padding:10px 12px;font-weight:700;cursor:pointer}
+.share-board{position:relative;display:grid;gap:16px;padding:18px;border-radius:26px;background:var(--preview-bg);border:1px solid var(--line)}
+.board-brand{position:absolute;top:18px;right:18px;display:inline-flex;align-items:center;padding:7px 10px;border-radius:999px;border:1px solid var(--brand-line);background:var(--brand-bg);color:var(--brand-text);font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+.board-header{display:grid;gap:10px;padding:10px 6px 18px;border-bottom:1px solid var(--line)}
+.board-title{margin:0;max-width:min(82%,900px);font-size:48px;line-height:1.02;letter-spacing:-.045em;color:var(--title-color)}
 .board-sub{margin:0;color:var(--muted);font-size:15px;line-height:1.6}
 .board-foot{text-align:right;color:var(--muted);font-size:13px}
-.empty-state{padding:18px;border-radius:18px;background:rgba(255,255,255,.025);border:1px dashed rgba(255,255,255,.1);color:var(--muted);text-align:center}
+.empty-state{padding:18px;border-radius:18px;background:rgba(255,255,255,.02);border:1px dashed var(--line);color:var(--muted);text-align:center}
 .empty-state.large{padding:48px 18px}
-@media (max-width: 960px){.shell{grid-template-columns:1fr}.side{position:static}.actions{grid-template-columns:1fr}.draft-item,.share-item{grid-template-columns:72px 1fr}.remove-btn{grid-column:2 / 3;justify-self:start}}
-
-      </style>
-    </head>
-    <body>
-      <div class="shell">
-        <aside class="panel side">
-          <div class="section hero">
-            <div class="eyebrow">Recommended</div>
-            <h1>Lambda Picks</h1>
-            <p class="hero-copy">Curate music, films, series, games and more. Build a sharp share image with minimal effort.</p>
-          </div>
-
-          <div class="section form-grid">
-            <div class="field">
-              <label for="listTitle">Collection title</label>
-              <input id="listTitle" type="text" placeholder="Weekend essentials" />
-            </div>
-
-            <div class="field">
-              <label for="itemCategory">Category</label>
-              <select id="itemCategory">
-                <option value="music">Music</option>
-                <option value="film">Film</option>
-                <option value="series">Series</option>
-                <option value="game">Game</option>
-                <option value="anime">Anime</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="itemName">Item title</label>
-              <input id="itemName" type="text" placeholder="NieR: Automata" />
-            </div>
-
-            <div class="field">
-              <label for="itemReason">Why recommend it</label>
-              <textarea id="itemReason" placeholder="Short, precise, worth sharing."></textarea>
-            </div>
-
-            <div class="field">
-              <label>Thumbnail (optional)</label>
-              <div class="thumb-row">
-                <label class="file-btn">
-                  <span>Choose image</span>
-                  <input id="thumbInput" type="file" accept="image/*" />
-                </label>
-                <img id="thumbPreview" class="thumb-preview" alt="thumbnail preview" />
-              </div>
-              <div id="thumbName" class="thumb-name">No image selected</div>
-            </div>
-
-            <div class="actions">
-              <button class="btn primary" id="addBtn">Add item</button>
-              <button class="btn secondary" id="buildBtn">Build preview</button>
-              <button class="btn secondary" id="shareBtn">Export image</button>
-              <button class="btn ghost" id="clearBtn">Clear all</button>
-            </div>
-
-            <div id="status" class="status">Ready.</div>
-          </div>
-        </aside>
-
-        <main class="stack">
-          <section class="panel section">
-            <div class="section-head">
-              <div>
-                <div class="section-title">Queue</div>
-                <div class="section-sub">Draft items before export</div>
-              </div>
-              <div id="count" class="count">0 items</div>
-            </div>
-            <div id="draftList" class="draft-list"></div>
-          </section>
-
-          <section class="panel section preview-shell">
-            <div class="section-head">
-              <div>
-                <div class="section-title">Share preview</div>
-                <div class="section-sub">This is the layout that will be rendered into the final image</div>
-              </div>
-            </div>
-            <div id="shareBoard" class="share-board"></div>
-          </section>
-        </main>
-      </div>
-
-      <script>
-
-const canvasPanelFill = 'rgba(255,255,255,0.03)';
-const canvasPanelStroke = 'rgba(255,255,255,0.08)';
-const canvasCardFill = 'rgba(255,255,255,0.035)';
-const canvasCardStroke = 'rgba(255,255,255,0.08)';
-const canvasHeadingText = '#f2f5f9';
-const canvasBodyText = '#cad2df';
-const canvasMutedText = '#99a5b8';
-const canvasImageEmptyFill = '#171c23';
-const canvasCardRadius = 24;
-const canvasFootText = 'Made with Lambda Picks';
-
-
-        function drawCanvasTheme(g, width, height) {
-
-const bg = g.createLinearGradient(0, 0, 0, height);
-bg.addColorStop(0, '#0b0d10');
-bg.addColorStop(1, '#141920');
-g.fillStyle = bg;
-g.fillRect(0, 0, width, height);
-
-        }
-
-        function drawCanvasHeader(g, title, titleLines, padding, cardWidth, count) {
-
-roundRect(g, padding + 26, padding + 26, 194, 42, 21);
-g.fillStyle = '#eef3f8';
-g.fill();
-g.fillStyle = '#10141a';
-g.font = '800 18px Inter, Arial, sans-serif';
-g.fillText('LAMBDA PICKS', padding + 44, padding + 53);
-
-g.fillStyle = '#f3f6fb';
-g.font = '700 46px Inter, Arial, sans-serif';
-let titleY = padding + 118;
-titleLines.forEach(line => {
-  g.fillText(line, padding + 28, titleY);
-  titleY += 58;
-});
-
-g.fillStyle = '#aab4c3';
-g.font = '400 24px Inter, Arial, sans-serif';
-g.fillText(`${count} ${count === 1 ? 'item' : 'items'} · ready to share`, padding + 28, titleY + 12);
-
-        }
-
-        function drawCanvasCategory(g, text, x, y) {
-
-const padX = 12;
-const h = 28;
-g.font = '800 14px Inter, Arial, sans-serif';
-const w = g.measureText(text).width + padX * 2;
-roundRect(g, x, y, w, h, 14);
-g.fillStyle = '#eef3f8';
-g.fill();
-g.fillStyle = '#10141a';
-g.fillText(text.toUpperCase(), x + padX, y + 19);
-
-        }
-
-
-    const STORAGE_KEY = '__lambda_picks_local_v2__';
-    let items = [];
-    let currentThumb = '';
-
-    const listTitleEl = document.getElementById('listTitle');
-    const itemCategoryEl = document.getElementById('itemCategory');
-    const itemNameEl = document.getElementById('itemName');
-    const itemReasonEl = document.getElementById('itemReason');
-    const thumbInputEl = document.getElementById('thumbInput');
-    const thumbPreviewEl = document.getElementById('thumbPreview');
-    const thumbNameEl = document.getElementById('thumbName');
-    const addBtn = document.getElementById('addBtn');
-    const buildBtn = document.getElementById('buildBtn');
-    const shareBtn = document.getElementById('shareBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const countEl = document.getElementById('count');
-    const draftListEl = document.getElementById('draftList');
-    const shareBoardEl = document.getElementById('shareBoard');
-    const statusEl = document.getElementById('status');
-
-    function uid() {
-      return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-    }
-
-    function setStatus(text) {
-      statusEl.textContent = text;
-    }
-
-    function escapeHtml(str) {
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
-
-    function categoryLabel(value) {
-      const labels = {
-        music: 'Music',
-        film: 'Film',
-        series: 'Series',
-        game: 'Game',
-        anime: 'Anime',
-        other: 'Other'
-      };
-      return labels[value] || 'Other';
-    }
-
-    function save() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({
-        listTitle: listTitleEl.value.trim(),
-        items
-      }));
-    }
-
-    function load() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return;
-        const data = JSON.parse(raw);
-        if (data && Array.isArray(data.items)) items = data.items;
-        if (data && typeof data.listTitle === 'string') listTitleEl.value = data.listTitle;
-      } catch (e) {}
-    }
-
-    function resetThumbInput() {
-      currentThumb = '';
-      thumbInputEl.value = '';
-      thumbPreviewEl.style.display = 'none';
-      thumbPreviewEl.src = '';
-      thumbNameEl.textContent = 'No image selected';
-    }
-
-    function renderDraftList() {
-      countEl.textContent = `${items.length} ${items.length === 1 ? 'item' : 'items'}`;
-      if (!items.length) {
-        draftListEl.innerHTML = `<div class="empty-state">No items yet.</div>`;
-        return;
-      }
-
-      draftListEl.innerHTML = items.map(item => `
-        <article class="draft-item">
-          ${item.thumb ? `<img class="draft-cover" src="${item.thumb}" alt="cover" />` : `<div class="draft-cover draft-noimg">No image</div>`}
-          <div class="draft-meta">
-            <div class="draft-badges"><span class="badge">${escapeHtml(categoryLabel(item.category))}</span></div>
-            <h3 class="draft-title">${escapeHtml(item.name)}</h3>
-            <p class="draft-reason">${escapeHtml(item.reason)}</p>
-          </div>
-          <button class="remove-btn" data-id="${item.id}">Delete</button>
-        </article>
-      `).join('');
-
-      draftListEl.querySelectorAll('[data-id]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          items = items.filter(item => item.id !== btn.dataset.id);
-          save();
-          renderDraftList();
-          renderShareBoard();
-          setStatus('Item removed.');
-        });
-      });
-    }
-
-    function renderShareBoard() {
-      const title = listTitleEl.value.trim() || 'Current Picks';
-      if (!items.length) {
-        shareBoardEl.innerHTML = `
-          <div class="board-header">
-            <span class="board-chip">LAMBDA PICKS</span>
-            <h2 class="board-title">${escapeHtml(title)}</h2>
-            <p class="board-sub">Build a clean share image for music, films, series, games and more.</p>
-          </div>
-          <div class="empty-state large">Your share image preview will appear here.</div>
-        `;
-        return;
-      }
-
-      shareBoardEl.innerHTML = `
-        <div class="board-header">
-          <span class="board-chip">LAMBDA PICKS</span>
-          <h2 class="board-title">${escapeHtml(title)}</h2>
-          <p class="board-sub">${items.length} ${items.length === 1 ? 'item' : 'items'} · ready to export</p>
+@media (max-width: 980px){
+  .shell{grid-template-columns:1fr}
+  .side{position:static}
+  .actions{grid-template-columns:1fr}
+  .draft-item,.share-item{grid-template-columns:72px 1fr}
+  .remove-btn{grid-column:2/3;justify-self:start}
+  .board-title{max-width:100%;font-size:40px}
+  .board-brand{position:static;justify-self:start}
+}
+body.preview-mode .shell{grid-template-columns:1fr;max-width:1100px;width:min(1100px,calc(100vw - 20px));margin:10px auto}
+body.preview-mode .side, body.preview-mode .queue-panel, body.preview-mode .preview-panel .section-head{display:none}
+body.preview-mode .preview-panel>.section{padding:0;border:0}
+body.preview-mode .preview-panel{background:transparent;border:none;box-shadow:none}
+body.preview-mode .share-board{min-height:660px}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="panel side">
+    <div class="section hero">
+      <div class="eyebrow">Collection image tool</div>
+      <h1>Lambda Picks</h1>
+      <p class="hero-copy">Curate music, films, series, games and more. Build a cleaner share image without extra clutter.</p>
+    </div>
+    <div class="section form-shell">
+      <section class="form-block">
+        <div class="block-head">
+          <div class="block-title">Collection</div>
+          <div class="block-note">Main heading first</div>
         </div>
-        <section class="share-items">
-          ${items.map(item => `
-            <article class="share-item">
-              ${item.thumb ? `<img class="share-cover" src="${item.thumb}" alt="cover" />` : `<div class="share-cover share-noimg">No image</div>`}
-              <div class="share-meta">
-                <span class="badge">${escapeHtml(categoryLabel(item.category))}</span>
-                <h3 class="share-name">${escapeHtml(item.name)}</h3>
-                <p class="share-reason">${escapeHtml(item.reason)}</p>
-              </div>
-            </article>
-          `).join('')}
-        </section>
-        <div class="board-foot">Generated locally from Lambda Picks</div>
-      `;
-      save();
-    }
+        <div class="field-card">
+          <label for="listTitle">Collection title</label>
+          <input id="listTitle" type="text" placeholder="Weekend essentials" />
+        </div>
+      </section>
+      <section class="form-block">
+        <div class="block-head">
+          <div class="block-title">Item details</div>
+          <div class="block-note">Separated, but still minimal</div>
+        </div>
+        <div class="field-card">
+          <label for="itemCategory">Category</label>
+          <select id="itemCategory">
+            <option value="music">Music</option>
+            <option value="film">Film</option>
+            <option value="series">Series</option>
+            <option value="game">Game</option>
+            <option value="anime">Anime</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="field-card">
+          <label for="itemName">Item title</label>
+          <input id="itemName" type="text" placeholder="NieR: Automata" />
+        </div>
+        <div class="field-card">
+          <label for="itemReason">Why recommend it</label>
+          <textarea id="itemReason" placeholder="Short, precise, worth sharing."></textarea>
+        </div>
+        <div class="field-card">
+          <label>Thumbnail (optional)</label>
+          <div class="thumb-row">
+            <label class="file-btn">
+              <span>Choose image</span>
+              <input id="thumbInput" type="file" accept="image/*" />
+            </label>
+            <img id="thumbPreview" class="thumb-preview" alt="thumbnail preview" />
+          </div>
+          <div id="thumbName" class="thumb-name">No image selected</div>
+        </div>
+      </section>
+      <div class="actions">
+        <button class="btn primary" id="addBtn">Add item</button>
+        <button class="btn secondary" id="buildBtn">Build preview</button>
+        <button class="btn secondary" id="shareBtn">Export image</button>
+        <button class="btn ghost" id="clearBtn">Clear all</button>
+      </div>
+      <div id="status" class="status">Ready.</div>
+    </div>
+  </aside>
 
-    function readFileAsDataURL(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
+  <main class="stack">
+    <section class="panel section queue-panel">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Queue</div>
+          <div class="section-sub">Draft items before export</div>
+        </div>
+        <div id="count" class="count">0 items</div>
+      </div>
+      <div id="draftList" class="draft-list"></div>
+    </section>
 
-    thumbInputEl.addEventListener('change', async (e) => {
-      const file = e.target.files?.[0];
-      if (!file) {
-        resetThumbInput();
-        return;
-      }
-      try {
-        currentThumb = await readFileAsDataURL(file);
-        thumbPreviewEl.src = currentThumb;
-        thumbPreviewEl.style.display = 'block';
-        thumbNameEl.textContent = file.name;
-      } catch (err) {
-        setStatus('Image read failed. Try another file.');
-        resetThumbInput();
-      }
-    });
+    <section class="panel preview-panel">
+      <div class="section">
+        <div class="section-head">
+          <div>
+            <div class="section-title">Share preview</div>
+            <div class="section-sub">Preview only. Exported image removes status copy.</div>
+          </div>
+        </div>
+        <div id="shareBoard" class="share-board"></div>
+      </div>
+    </section>
+  </main>
+</div>
 
-    addBtn.addEventListener('click', () => {
-      const category = itemCategoryEl.value;
-      const name = itemNameEl.value.trim();
-      const reason = itemReasonEl.value.trim();
-      if (!name) return setStatus('Enter a title first.');
-      if (!reason) return setStatus('Add a short reason.');
+<script>
+const THEME = {"storageSuffix": "studio_refined", "export_bg_top": "#0b0d10", "export_bg_bottom": "#151a21", "export_panel_fill": "rgba(255,255,255,0.03)", "export_panel_stroke": "rgba(255,255,255,0.08)", "export_card_fill": "rgba(255,255,255,0.035)", "export_card_stroke": "rgba(255,255,255,0.08)", "export_heading": "#f2f5f9", "export_body": "#cad2df", "export_muted": "#99a5b8", "export_empty": "#171c23", "export_badge_bg": "#eef3f8", "export_badge_text": "#10141a", "export_brand_bg": "rgba(255,255,255,.02)", "export_brand_line": "rgba(255,255,255,.12)"};
+const STORAGE_KEY = '__lambda_picks_refresh__' + THEME.storageSuffix;
+const DEMO_MODE = new URLSearchParams(location.search).get('demo') === '1';
+const PREVIEW_MODE = new URLSearchParams(location.search).get('preview') === '1';
+if (PREVIEW_MODE) document.body.classList.add('preview-mode');
 
-      items.push({
-        id: uid(),
-        category,
-        name,
-        reason,
-        thumb: currentThumb || ''
-      });
+const SAMPLE_DATA = {
+  title: "Shaw's picks",
+  items: [{"category": "film", "name": "Blade Runner 2049", "reason": "Dense atmosphere, surgical pacing, and a world that keeps expanding after the credits.", "thumb": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27320%27%20height%3D%27320%27%20viewBox%3D%270%200%20320%20320%27%3E%0A%3Cdefs%3E%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20x2%3D%271%27%20y1%3D%270%27%20y2%3D%271%27%3E%3Cstop%20stop-color%3D%27%23f15a24%27/%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23fbb03b%27/%3E%3C/linearGradient%3E%3C/defs%3E%0A%3Crect%20width%3D%27320%27%20height%3D%27320%27%20rx%3D%2732%27%20fill%3D%27%2312161d%27/%3E%0A%3Crect%20x%3D%2720%27%20y%3D%2720%27%20width%3D%27280%27%20height%3D%27280%27%20rx%3D%2726%27%20fill%3D%27url%28%23g%29%27/%3E%0A%3Ctext%20x%3D%2730%27%20y%3D%27270%27%20fill%3D%27%2310141a%27%20font-size%3D%2732%27%20font-family%3D%27Arial%27%20font-weight%3D%27700%27%3EBlade%20Runner%202049%3C/text%3E%0A%3C/svg%3E"}, {"category": "game", "name": "Half-Life 2", "reason": "Still absurdly sharp in rhythm, level flow, and visual storytelling.", "thumb": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27320%27%20height%3D%27320%27%20viewBox%3D%270%200%20320%20320%27%3E%0A%3Crect%20width%3D%27320%27%20height%3D%27320%27%20rx%3D%2732%27%20fill%3D%27%230d1117%27/%3E%0A%3Crect%20x%3D%2718%27%20y%3D%2718%27%20width%3D%27284%27%20height%3D%27284%27%20rx%3D%2728%27%20fill%3D%27%230ea5e9%27/%3E%0A%3Crect%20x%3D%2742%27%20y%3D%2744%27%20width%3D%27236%27%20height%3D%27162%27%20rx%3D%2720%27%20fill%3D%27%23111827%27/%3E%0A%3Ctext%20x%3D%2736%27%20y%3D%27270%27%20fill%3D%27%23e5f3ff%27%20font-size%3D%2736%27%20font-family%3D%27Arial%27%20font-weight%3D%27700%27%3EHalf-Life%202%3C/text%3E%0A%3C/svg%3E"}]
+};
 
-      itemNameEl.value = '';
-      itemReasonEl.value = '';
-      itemCategoryEl.value = 'music';
-      resetThumbInput();
+let items = [];
+let currentThumb = '';
+
+const listTitleEl = document.getElementById('listTitle');
+const itemCategoryEl = document.getElementById('itemCategory');
+const itemNameEl = document.getElementById('itemName');
+const itemReasonEl = document.getElementById('itemReason');
+const thumbInputEl = document.getElementById('thumbInput');
+const thumbPreviewEl = document.getElementById('thumbPreview');
+const thumbNameEl = document.getElementById('thumbName');
+const addBtn = document.getElementById('addBtn');
+const buildBtn = document.getElementById('buildBtn');
+const shareBtn = document.getElementById('shareBtn');
+const clearBtn = document.getElementById('clearBtn');
+const countEl = document.getElementById('count');
+const draftListEl = document.getElementById('draftList');
+const shareBoardEl = document.getElementById('shareBoard');
+const statusEl = document.getElementById('status');
+
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+function setStatus(text) { statusEl.textContent = text; }
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function categoryLabel(value) {
+  return ({music:'Music',film:'Film',series:'Series',game:'Game',anime:'Anime',other:'Other'})[value] || 'Other';
+}
+function save() {
+  if (DEMO_MODE) return;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({listTitle:listTitleEl.value.trim(), items}));
+}
+function load() {
+  if (DEMO_MODE) {
+    items = structuredClone(SAMPLE_DATA.items).map((item, index) => ({id:'demo-' + index, ...item}));
+    listTitleEl.value = SAMPLE_DATA.title;
+    return;
+  }
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (data && Array.isArray(data.items)) items = data.items;
+    if (data && typeof data.listTitle === 'string') listTitleEl.value = data.listTitle;
+  } catch (e) {}
+}
+function resetThumbInput() {
+  currentThumb = '';
+  thumbInputEl.value = '';
+  thumbPreviewEl.style.display = 'none';
+  thumbPreviewEl.src = '';
+  thumbNameEl.textContent = 'No image selected';
+}
+function renderDraftList() {
+  countEl.textContent = `${items.length} ${items.length === 1 ? 'item' : 'items'}`;
+  if (!items.length) {
+    draftListEl.innerHTML = `<div class="empty-state">No items yet.</div>`;
+    return;
+  }
+  draftListEl.innerHTML = items.map(item => `
+    <article class="draft-item">
+      ${item.thumb ? `<img class="draft-cover" src="${item.thumb}" alt="cover" />` : `<div class="draft-cover draft-noimg">No image</div>`}
+      <div class="draft-meta">
+        <div class="meta-head">
+          <span class="badge">${escapeHtml(categoryLabel(item.category))}</span>
+          <h3 class="draft-title">${escapeHtml(item.name)}</h3>
+        </div>
+        <p class="draft-reason">${escapeHtml(item.reason)}</p>
+      </div>
+      <button class="remove-btn" data-id="${item.id}">Delete</button>
+    </article>
+  `).join('');
+  draftListEl.querySelectorAll('[data-id]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      items = items.filter(item => item.id !== btn.dataset.id);
       save();
       renderDraftList();
       renderShareBoard();
-      setStatus('Item added.');
+      setStatus('Item removed.');
     });
+  });
+}
+function renderShareBoard() {
+  const title = listTitleEl.value.trim() || 'Current Picks';
+  const countText = `${items.length} ${items.length === 1 ? 'item' : 'items'} · ready to export`;
+  if (!items.length) {
+    shareBoardEl.innerHTML = `
+      <div class="board-brand">LAMBDA PICKS</div>
+      <div class="board-header">
+        <h2 class="board-title">${escapeHtml(title)}</h2>
+        <p class="board-sub">Build a cleaner share image for music, films, series, games and more.</p>
+      </div>
+      <div class="empty-state large">Your share image preview will appear here.</div>
+      <div class="board-foot">Generated locally from Lambda Picks</div>
+    `;
+    return;
+  }
+  shareBoardEl.innerHTML = `
+    <div class="board-brand">LAMBDA PICKS</div>
+    <div class="board-header">
+      <h2 class="board-title">${escapeHtml(title)}</h2>
+      <p class="board-sub">${countText}</p>
+    </div>
+    <section class="share-items">
+      ${items.map(item => `
+        <article class="share-item">
+          ${item.thumb ? `<img class="share-cover" src="${item.thumb}" alt="cover" />` : `<div class="share-cover share-noimg">No image</div>`}
+          <div class="share-meta">
+            <div class="meta-head">
+              <span class="badge">${escapeHtml(categoryLabel(item.category))}</span>
+              <h3 class="share-name">${escapeHtml(item.name)}</h3>
+            </div>
+            <p class="share-reason">${escapeHtml(item.reason)}</p>
+          </div>
+        </article>
+      `).join('')}
+    </section>
+    <div class="board-foot">Generated locally from Lambda Picks</div>
+  `;
+  save();
+}
+function readFileAsDataURL(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+thumbInputEl.addEventListener('change', async (e) => {
+  const file = e.target.files?.[0];
+  if (!file) { resetThumbInput(); return; }
+  try {
+    currentThumb = await readFileAsDataURL(file);
+    thumbPreviewEl.src = currentThumb;
+    thumbPreviewEl.style.display = 'block';
+    thumbNameEl.textContent = file.name;
+  } catch (err) {
+    setStatus('Image read failed. Try another file.');
+    resetThumbInput();
+  }
+});
+addBtn.addEventListener('click', () => {
+  const category = itemCategoryEl.value;
+  const name = itemNameEl.value.trim();
+  const reason = itemReasonEl.value.trim();
+  if (!name) return setStatus('Enter a title first.');
+  if (!reason) return setStatus('Add a short reason.');
+  items.push({id:uid(), category, name, reason, thumb: currentThumb || ''});
+  itemNameEl.value = '';
+  itemReasonEl.value = '';
+  itemCategoryEl.value = 'music';
+  resetThumbInput();
+  save();
+  renderDraftList();
+  renderShareBoard();
+  setStatus('Item added.');
+});
+buildBtn.addEventListener('click', () => {
+  renderShareBoard();
+  setStatus('Preview updated.');
+});
+clearBtn.addEventListener('click', () => {
+  items = [];
+  save();
+  renderDraftList();
+  renderShareBoard();
+  setStatus('All items cleared.');
+});
+listTitleEl.addEventListener('input', save);
 
-    buildBtn.addEventListener('click', () => {
-      renderShareBoard();
-      setStatus('Preview updated.');
-    });
-
-    clearBtn.addEventListener('click', () => {
-      items = [];
-      save();
-      renderDraftList();
-      renderShareBoard();
-      setStatus('All items cleared.');
-    });
-
-    listTitleEl.addEventListener('input', save);
-
-    function loadImage(src) {
-      return new Promise((resolve) => {
-        if (!src) return resolve(null);
-        const img = new Image();
-        img.onload = () => resolve(img);
-        img.onerror = () => resolve(null);
-        img.src = src;
-      });
-    }
-
-    function roundRect(ctx, x, y, w, h, r) {
-      const rr = Math.min(r, w / 2, h / 2);
-      ctx.beginPath();
-      ctx.moveTo(x + rr, y);
-      ctx.arcTo(x + w, y, x + w, y + h, rr);
-      ctx.arcTo(x + w, y + h, x, y + h, rr);
-      ctx.arcTo(x, y + h, x, y, rr);
-      ctx.arcTo(x, y, x + w, y, rr);
-      ctx.closePath();
-    }
-
-    function wrapText(ctx, text, maxWidth) {
-      const rawLines = String(text).split(/\n/);
-      const lines = [];
-      for (const raw of rawLines) {
-        const chars = [...raw];
-        let current = '';
-        for (const ch of chars) {
-          const test = current + ch;
-          if (ctx.measureText(test).width > maxWidth && current) {
-            lines.push(current);
-            current = ch;
-          } else {
-            current = test;
-          }
-        }
-        lines.push(current || ' ');
-      }
-      return lines;
-    }
-
-    async function drawShareCanvas() {
-      const title = listTitleEl.value.trim() || 'Current Picks';
-      const width = 1080;
-      const padding = 42;
-      const coverSize = 128;
-      const gap = 18;
-      const innerPad = 18;
-      const cardWidth = width - padding * 2;
-      const textWidth = cardWidth - innerPad * 2 - coverSize - 20;
-
-      const tempCanvas = document.createElement('canvas');
-      const ctx = tempCanvas.getContext('2d');
-      ctx.font = '700 46px Inter, Arial, sans-serif';
-      const titleLines = wrapText(ctx, title, cardWidth - 16);
-      const titleHeight = titleLines.length * 58;
-
-      const imageCache = await Promise.all(items.map(item => loadImage(item.thumb)));
-      const layouts = [];
-      let y = padding + 172 + titleHeight;
-
-      items.forEach((item, i) => {
-        ctx.font = '700 34px Inter, Arial, sans-serif';
-        const nameLines = wrapText(ctx, item.name, textWidth);
-        ctx.font = '400 24px Inter, Arial, sans-serif';
-        const reasonLines = wrapText(ctx, item.reason, textWidth);
-        const textHeight = 32 + nameLines.length * 42 + 12 + reasonLines.length * 34;
-        const cardHeight = Math.max(coverSize, textHeight) + innerPad * 2;
-        layouts.push({
-          item,
-          image: imageCache[i],
-          y,
-          cardHeight,
-          nameLines,
-          reasonLines
-        });
-        y += cardHeight + gap;
-      });
-
-      const height = y + 62;
-      tempCanvas.width = width;
-      tempCanvas.height = height;
-
-      const g = tempCanvas.getContext('2d');
-      drawCanvasTheme(g, width, height);
-
-      roundRect(g, padding, padding, cardWidth, height - padding * 2, 32);
-      g.fillStyle = canvasPanelFill;
-      g.strokeStyle = canvasPanelStroke;
-      g.lineWidth = 1;
-      g.fill();
-      g.stroke();
-
-      drawCanvasHeader(g, title, titleLines, padding, cardWidth, items.length);
-
-      layouts.forEach(layout => {
-        const cardX = padding + 18;
-        const cardY = layout.y;
-        const cardW = cardWidth - 36;
-        roundRect(g, cardX, cardY, cardW, layout.cardHeight, canvasCardRadius);
-        g.fillStyle = canvasCardFill;
-        g.strokeStyle = canvasCardStroke;
-        g.lineWidth = 1;
-        g.fill();
-        g.stroke();
-
-        const coverX = cardX + innerPad;
-        const coverY = cardY + innerPad;
-        roundRect(g, coverX, coverY, coverSize, coverSize, 18);
-        g.save();
-        g.clip();
-        if (layout.image) {
-          g.drawImage(layout.image, coverX, coverY, coverSize, coverSize);
-        } else {
-          g.fillStyle = canvasImageEmptyFill;
-          g.fillRect(coverX, coverY, coverSize, coverSize);
-          g.fillStyle = canvasMutedText;
-          g.font = '600 16px Inter, Arial, sans-serif';
-          const label = 'No image';
-          const w = g.measureText(label).width;
-          g.fillText(label, coverX + (coverSize - w) / 2, coverY + coverSize / 2 + 6);
-        }
-        g.restore();
-
-        const textX = coverX + coverSize + 20;
-        let textY = coverY + 24;
-        drawCanvasCategory(g, categoryLabel(layout.item.category), textX, textY - 10);
-        textY += 28;
-
-        g.fillStyle = canvasHeadingText;
-        g.font = '700 34px Inter, Arial, sans-serif';
-        layout.nameLines.forEach(line => {
-          g.fillText(line, textX, textY + 12);
-          textY += 42;
-        });
-
-        textY += 8;
-        g.fillStyle = canvasBodyText;
-        g.font = '400 24px Inter, Arial, sans-serif';
-        layout.reasonLines.forEach(line => {
-          g.fillText(line, textX, textY + 8);
-          textY += 34;
-        });
-      });
-
-      g.fillStyle = canvasMutedText;
-      g.font = '400 18px Inter, Arial, sans-serif';
-      const foot = canvasFootText;
-      const footWidth = g.measureText(foot).width;
-      g.fillText(foot, width - padding - footWidth, height - 28);
-
-      return tempCanvas;
-    }
-
-    async function shareList() {
-      if (!items.length) return setStatus('Add at least one item first.');
-
-      renderShareBoard();
-      setStatus('Generating image...');
-      try {
-        const canvas = await drawShareCanvas();
-        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-        if (!blob) throw new Error('PNG generation failed');
-
-        const title = (listTitleEl.value.trim() || 'lambda-picks').replace(/[\\/:*?"<>|]+/g, '-');
-        const file = new File([blob], `${title}.png`, { type: 'image/png' });
-
-        const canNativeShare = navigator.canShare && navigator.canShare({ files: [file] });
-        if (canNativeShare && navigator.share) {
-          await navigator.share({ files: [file], title, text: title });
-          setStatus('System share opened.');
-          return;
-        }
-
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${title}.png`;
-        a.click();
-        setTimeout(() => URL.revokeObjectURL(url), 2000);
-        setStatus('PNG downloaded.');
-      } catch (err) {
-        console.error(err);
-        setStatus('Share failed. Try again.');
+function loadImage(src) {
+  return new Promise(resolve => {
+    if (!src) return resolve(null);
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+}
+function roundRect(ctx, x, y, w, h, r) {
+  const rr = Math.min(r, w / 2, h / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + rr, y);
+  ctx.arcTo(x + w, y, x + w, y + h, rr);
+  ctx.arcTo(x + w, y + h, x, y + h, rr);
+  ctx.arcTo(x, y + h, x, y, rr);
+  ctx.arcTo(x, y, x + w, y, rr);
+  ctx.closePath();
+}
+function wrapText(ctx, text, maxWidth) {
+  const lines = [];
+  for (const raw of String(text).split(/\n/)) {
+    let current = '';
+    for (const ch of [...raw]) {
+      const test = current + ch;
+      if (ctx.measureText(test).width > maxWidth && current) {
+        lines.push(current);
+        current = ch;
+      } else {
+        current = test;
       }
     }
-
-    shareBtn.addEventListener('click', shareList);
-
-    load();
-    renderDraftList();
-    renderShareBoard();
-
-      </script>
-    </body>
-    </html>
+    lines.push(current || ' ');
+  }
+  return lines;
+}
+function drawBrand(g, width, padding) {
+  const label = 'Lambda Picks';
+  g.font = '700 18px Inter, Arial, sans-serif';
+  const padX = 14;
+  const w = g.measureText(label).width + padX * 2;
+  const h = 34;
+  const x = width - padding - w;
+  const y = padding + 22;
+  roundRect(g, x, y, w, h, 17);
+  g.fillStyle = THEME.export_brand_bg;
+  g.strokeStyle = THEME.export_brand_line;
+  g.lineWidth = 1;
+  g.fill();
+  g.stroke();
+  g.fillStyle = THEME.export_muted;
+  g.fillText(label, x + padX, y + 22);
+}
+function drawCanvasCategory(g, text, x, y) {
+  g.font = '800 14px Inter, Arial, sans-serif';
+  const padX = 12;
+  const h = 28;
+  const display = text.toUpperCase();
+  const w = g.measureText(display).width + padX * 2;
+  roundRect(g, x, y, w, h, 14);
+  g.fillStyle = THEME.export_badge_bg;
+  g.fill();
+  g.fillStyle = THEME.export_badge_text;
+  g.fillText(display, x + padX, y + 19);
+}
+async function drawShareCanvas() {
+  const title = listTitleEl.value.trim() || 'Current Picks';
+  const width = 1080;
+  const padding = 42;
+  const coverSize = 128;
+  const gap = 18;
+  const innerPad = 18;
+  const cardWidth = width - padding * 2;
+  const textWidth = cardWidth - innerPad * 2 - coverSize - 24;
+  const tempCanvas = document.createElement('canvas');
+  const ctx = tempCanvas.getContext('2d');
+  ctx.font = '700 48px Inter, Arial, sans-serif';
+  const titleLines = wrapText(ctx, title, cardWidth - 44);
+  const titleHeight = titleLines.length * 58;
+  const imageCache = await Promise.all(items.map(item => loadImage(item.thumb)));
+  const layouts = [];
+  let y = padding + 150 + titleHeight;
+  items.forEach((item, i) => {
+    ctx.font = '700 34px Inter, Arial, sans-serif';
+    const nameLines = wrapText(ctx, item.name, textWidth);
+    ctx.font = '400 24px Inter, Arial, sans-serif';
+    const reasonLines = wrapText(ctx, item.reason, textWidth);
+    const textHeight = 58 + nameLines.length * 42 + 18 + reasonLines.length * 34;
+    const cardHeight = Math.max(coverSize, textHeight) + innerPad * 2;
+    layouts.push({item, image:imageCache[i], y, cardHeight, nameLines, reasonLines});
+    y += cardHeight + gap;
+  });
+  const height = y + 62;
+  tempCanvas.width = width;
+  tempCanvas.height = height;
+  const g = tempCanvas.getContext('2d');
+  const bg = g.createLinearGradient(0,0,0,height);
+  bg.addColorStop(0, THEME.export_bg_top);
+  bg.addColorStop(1, THEME.export_bg_bottom);
+  g.fillStyle = bg;
+  g.fillRect(0,0,width,height);
+  roundRect(g, padding, padding, cardWidth, height - padding * 2, 32);
+  g.fillStyle = THEME.export_panel_fill;
+  g.strokeStyle = THEME.export_panel_stroke;
+  g.lineWidth = 1;
+  g.fill();
+  g.stroke();
+  drawBrand(g, width, padding);
+  g.fillStyle = THEME.export_heading;
+  g.font = '700 48px Inter, Arial, sans-serif';
+  let titleY = padding + 92;
+  titleLines.forEach(line => {
+    g.fillText(line, padding + 28, titleY);
+    titleY += 58;
+  });
+  g.strokeStyle = THEME.export_panel_stroke;
+  g.lineWidth = 1;
+  g.beginPath();
+  g.moveTo(padding + 28, titleY + 8);
+  g.lineTo(width - padding - 28, titleY + 8);
+  g.stroke();
+  layouts.forEach(layout => {
+    const cardX = padding + 18;
+    const cardY = layout.y;
+    const cardW = cardWidth - 36;
+    roundRect(g, cardX, cardY, cardW, layout.cardHeight, 24);
+    g.fillStyle = THEME.export_card_fill;
+    g.strokeStyle = THEME.export_card_stroke;
+    g.fill();
+    g.stroke();
+    const coverX = cardX + innerPad;
+    const coverY = cardY + innerPad;
+    roundRect(g, coverX, coverY, coverSize, coverSize, 18);
+    g.save();
+    g.clip();
+    if (layout.image) {
+      g.drawImage(layout.image, coverX, coverY, coverSize, coverSize);
+    } else {
+      g.fillStyle = THEME.export_empty;
+      g.fillRect(coverX, coverY, coverSize, coverSize);
+      g.fillStyle = THEME.export_muted;
+      g.font = '600 16px Inter, Arial, sans-serif';
+      const noText = 'No image';
+      const noW = g.measureText(noText).width;
+      g.fillText(noText, coverX + (coverSize - noW)/2, coverY + coverSize/2 + 6);
+    }
+    g.restore();
+    const textX = coverX + coverSize + 22;
+    let textY = coverY + 8;
+    drawCanvasCategory(g, categoryLabel(layout.item.category), textX, textY);
+    textY += 50;
+    g.fillStyle = THEME.export_heading;
+    g.font = '700 34px Inter, Arial, sans-serif';
+    layout.nameLines.forEach(line => {
+      g.fillText(line, textX, textY + 18);
+      textY += 42;
+    });
+    g.strokeStyle = THEME.export_card_stroke;
+    g.lineWidth = 1;
+    g.beginPath();
+    g.moveTo(textX, textY + 4);
+    g.lineTo(cardX + cardW - 18, textY + 4);
+    g.stroke();
+    textY += 18;
+    g.fillStyle = THEME.export_body;
+    g.font = '400 24px Inter, Arial, sans-serif';
+    layout.reasonLines.forEach(line => {
+      g.fillText(line, textX, textY + 8);
+      textY += 34;
+    });
+  });
+  g.fillStyle = THEME.export_muted;
+  g.font = '400 18px Inter, Arial, sans-serif';
+  const foot = 'Generated locally from Lambda Picks';
+  const footWidth = g.measureText(foot).width;
+  g.fillText(foot, width - padding - footWidth, height - 28);
+  return tempCanvas;
+}
+async function shareList() {
+  if (!items.length) return setStatus('Add at least one item first.');
+  renderShareBoard();
+  setStatus('Generating image...');
+  try {
+    const canvas = await drawShareCanvas();
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+    if (!blob) throw new Error('PNG generation failed');
+    const title = (listTitleEl.value.trim() || 'lambda-picks').replace(/[\\/:*?"<>|]+/g, '-');
+    const file = new File([blob], `${title}.png`, {type:'image/png'});
+    const canNativeShare = navigator.canShare && navigator.canShare({files:[file]});
+    if (canNativeShare && navigator.share) {
+      await navigator.share({files:[file], title, text:title});
+      setStatus('System share opened.');
+      return;
+    }
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${title}.png`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+    setStatus('PNG downloaded.');
+  } catch (err) {
+    console.error(err);
+    setStatus('Share failed. Try again.');
+  }
+}
+shareBtn.addEventListener('click', shareList);
+load();
+renderDraftList();
+renderShareBoard();
+if (DEMO_MODE) setStatus('Demo loaded.');
+</script>
+</body>
+</html>
