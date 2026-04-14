@@ -3,67 +3,67 @@
     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Lambda Picks — Studio</title>
+      <title>Lambda Picks — Editorial</title>
       <style>
 
 :root{
-  --bg:#0b0d10;--bg-2:#111419;--panel:#14181e;--panel-2:#171c23;--line:rgba(255,255,255,.08);
-  --text:#f3f5f7;--muted:#9aa4b2;--soft:#cfd6e0;--chip:#e9edf3;--chip-text:#10141a;
-  --primary:#eff3f8;--primary-text:#0d1117;--danger:#ff9797;--radius:24px;--shadow:0 18px 46px rgba(0,0,0,.26);
+  --bg:#f3efe7;--bg-2:#e9e1d3;--panel:#fffdf9;--line:rgba(29,24,18,.12);
+  --text:#17130f;--muted:#76695a;--soft:#342b22;--primary:#17130f;--primary-text:#f7f3ec;
+  --secondary:#efe8db;--radius:26px;--shadow:0 20px 42px rgba(38,28,17,.08)
 }
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);background:radial-gradient(circle at top left,#161b24 0,#0b0d10 48%),linear-gradient(180deg,#090b0e,#0f1318);min-height:100vh}
-.shell{width:min(1180px,calc(100vw - 28px));margin:26px auto 40px;display:grid;grid-template-columns:390px minmax(0,1fr);gap:20px}
-.panel{background:rgba(20,24,30,.92);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--text);background:
+linear-gradient(180deg,#f5f1ea,#ede4d5);min-height:100vh}
+.shell{width:min(1180px,calc(100vw - 28px));margin:28px auto 44px;display:grid;grid-template-columns:400px minmax(0,1fr);gap:20px}
+.panel{background:rgba(255,253,249,.94);border:1px solid var(--line);border-radius:30px;box-shadow:var(--shadow)}
 .side{position:sticky;top:18px;align-self:start;overflow:hidden}
-.section{padding:22px}
+.section{padding:24px}
 .hero{padding-bottom:18px;border-bottom:1px solid var(--line)}
-.eyebrow{display:inline-flex;padding:8px 12px;border:1px solid rgba(255,255,255,.1);border-radius:999px;color:var(--muted);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
-h1{margin:16px 0 10px;font-size:34px;line-height:1.04;letter-spacing:-.035em}
+.eyebrow{display:inline-flex;padding:7px 11px;border:1px solid rgba(29,24,18,.12);border-radius:999px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+h1{margin:16px 0 12px;font-size:40px;line-height:.98;letter-spacing:-.045em;font-family:Georgia,"Times New Roman",serif}
 .hero-copy,.section-sub,.status,.thumb-name,.count{color:var(--muted)}
-.hero-copy{margin:0;font-size:14px;line-height:1.7}
+.hero-copy{margin:0;font-size:14px;line-height:1.78}
 .form-grid{display:grid;gap:16px}
-.field label{display:block;margin-bottom:10px;font-size:13px;font-weight:700;letter-spacing:.01em;color:var(--soft)}
+.field label{display:block;margin-bottom:10px;font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
 input[type="text"],textarea,select{
-  width:100%;border-radius:18px;border:1px solid rgba(255,255,255,.08);background:#171c23;color:var(--text);
+  width:100%;border-radius:18px;border:1px solid rgba(29,24,18,.1);background:#fcf8f1;color:var(--text);
   padding:14px 15px;font-size:15px;outline:none;transition:.18s ease;border-color .18s ease, box-shadow .18s ease
 }
-textarea{min-height:120px;resize:vertical;line-height:1.65}
-input[type="text"]:focus,textarea:focus,select:focus{border-color:#6f7b8b;box-shadow:0 0 0 4px rgba(255,255,255,.05)}
+textarea{min-height:120px;resize:vertical;line-height:1.7}
+input[type="text"]:focus,textarea:focus,select:focus{border-color:#8e7d69;box-shadow:0 0 0 4px rgba(90,69,44,.08)}
 .thumb-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.file-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;min-height:46px;border-radius:16px;border:1px dashed #536072;background:#171c23;cursor:pointer}
+.file-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;padding:12px 14px;min-height:46px;border-radius:16px;border:1px dashed #ac9984;background:#f5eee3;cursor:pointer}
 .file-btn input{position:absolute;inset:0;opacity:0;cursor:pointer}
-.thumb-preview{width:72px;height:72px;border-radius:16px;display:none;object-fit:cover;border:1px solid rgba(255,255,255,.08)}
+.thumb-preview{width:72px;height:72px;border-radius:16px;display:none;object-fit:cover;border:1px solid rgba(29,24,18,.08)}
 .thumb-name{font-size:13px}
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .btn{appearance:none;border:none;border-radius:16px;padding:13px 16px;font-size:14px;font-weight:800;cursor:pointer;transition:transform .12s ease,opacity .18s ease}
 .btn:hover{transform:translateY(-1px)}
 .primary{background:var(--primary);color:var(--primary-text)}
-.secondary{background:#252c35;color:var(--text);border:1px solid rgba(255,255,255,.1)}
-.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,.12)}
+.secondary{background:#efe7da;color:#1b1611;border:1px solid rgba(29,24,18,.08)}
+.ghost{background:transparent;color:var(--muted);border:1px solid rgba(29,24,18,.12)}
 .stack{display:grid;gap:20px}
 .section-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:18px}
-.section-title{font-size:20px;font-weight:800;letter-spacing:-.02em}
+.section-title{font-size:21px;font-weight:800;letter-spacing:-.02em}
 .draft-list,.share-items{display:grid;gap:14px}
-.draft-item,.share-item{display:grid;grid-template-columns:78px 1fr auto;gap:14px;align-items:start;padding:14px;border-radius:22px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06)}
+.draft-item,.share-item{display:grid;grid-template-columns:78px 1fr auto;gap:14px;align-items:start;padding:14px;border-radius:22px;background:#fbf6ee;border:1px solid rgba(29,24,18,.08)}
 .share-item{grid-template-columns:96px 1fr}
-.draft-meta,.share-meta{min-width:0}
-.draft-cover,.share-cover{width:78px;height:78px;border-radius:18px;object-fit:cover;background:#11151b;border:1px solid rgba(255,255,255,.08)}
+.draft-cover,.share-cover{width:78px;height:78px;border-radius:18px;object-fit:cover;background:#e9dece;border:1px solid rgba(29,24,18,.08)}
 .share-cover{width:96px;height:96px;border-radius:22px}
 .draft-noimg,.share-noimg{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;text-align:center;padding:8px}
-.badge{display:inline-flex;padding:6px 10px;border-radius:999px;background:#eff3f8;color:#10141a;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
-.draft-title,.share-name{margin:10px 0 8px;font-size:20px;line-height:1.2;letter-spacing:-.02em}
-.share-name{font-size:26px}
-.draft-reason,.share-reason{margin:0;color:#c6ceda;line-height:1.65;font-size:14px}
+.badge{display:inline-flex;padding:5px 10px;border-radius:999px;background:#17130f;color:#f7f3ec;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.draft-title,.share-name{margin:10px 0 8px;font-size:20px;line-height:1.2;letter-spacing:-.02em;font-family:Georgia,"Times New Roman",serif}
+.share-name{font-size:28px}
+.draft-reason,.share-reason{margin:0;color:#55483c;line-height:1.72;font-size:14px}
 .share-reason{font-size:15px}
-.remove-btn{appearance:none;border:none;background:transparent;color:#ffb0b0;border:1px solid rgba(255,176,176,.24);border-radius:14px;padding:10px 12px;font-weight:700;cursor:pointer}
+.remove-btn{appearance:none;border:none;background:transparent;color:#8d473f;border:1px solid rgba(141,71,63,.2);border-radius:14px;padding:10px 12px;font-weight:700;cursor:pointer}
 .share-board{display:grid;gap:16px}
 .board-header{padding:10px 4px 6px}
-.board-chip{display:inline-flex;padding:8px 12px;border-radius:999px;background:#eff3f8;color:#10141a;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
-.board-title{margin:16px 0 10px;font-size:40px;line-height:1.02;letter-spacing:-.04em}
-.board-sub{margin:0;color:var(--muted);font-size:15px;line-height:1.6}
+.board-chip{display:inline-flex;padding:8px 12px;border-radius:999px;background:#17130f;color:#f7f3ec;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+.board-title{margin:16px 0 10px;font-size:44px;line-height:.98;letter-spacing:-.05em;font-family:Georgia,"Times New Roman",serif}
+.board-sub{margin:0;color:var(--muted);font-size:15px;line-height:1.68}
 .board-foot{text-align:right;color:var(--muted);font-size:13px}
-.empty-state{padding:18px;border-radius:18px;background:rgba(255,255,255,.025);border:1px dashed rgba(255,255,255,.1);color:var(--muted);text-align:center}
+.empty-state{padding:18px;border-radius:18px;background:#fbf6ee;border:1px dashed rgba(29,24,18,.15);color:var(--muted);text-align:center}
 .empty-state.large{padding:48px 18px}
 @media (max-width: 960px){.shell{grid-template-columns:1fr}.side{position:static}.actions{grid-template-columns:1fr}.draft-item,.share-item{grid-template-columns:72px 1fr}.remove-btn{grid-column:2 / 3;justify-self:start}}
 
@@ -73,9 +73,9 @@ input[type="text"]:focus,textarea:focus,select:focus{border-color:#6f7b8b;box-sh
       <div class="shell">
         <aside class="panel side">
           <div class="section hero">
-            <div class="eyebrow">Recommended</div>
+            <div class="eyebrow">Curated list</div>
             <h1>Lambda Picks</h1>
-            <p class="hero-copy">Curate music, films, series, games and more. Build a sharp share image with minimal effort.</p>
+            <p class="hero-copy">A warmer editorial look for recommendations that feel more curated and more premium.</p>
           </div>
 
           <div class="section form-grid">
@@ -155,14 +155,14 @@ input[type="text"]:focus,textarea:focus,select:focus{border-color:#6f7b8b;box-sh
 
       <script>
 
-const canvasPanelFill = 'rgba(255,255,255,0.03)';
-const canvasPanelStroke = 'rgba(255,255,255,0.08)';
-const canvasCardFill = 'rgba(255,255,255,0.035)';
-const canvasCardStroke = 'rgba(255,255,255,0.08)';
-const canvasHeadingText = '#f2f5f9';
-const canvasBodyText = '#cad2df';
-const canvasMutedText = '#99a5b8';
-const canvasImageEmptyFill = '#171c23';
+const canvasPanelFill = 'rgba(255,250,243,0.76)';
+const canvasPanelStroke = 'rgba(43,32,20,0.12)';
+const canvasCardFill = 'rgba(255,248,238,0.88)';
+const canvasCardStroke = 'rgba(43,32,20,0.10)';
+const canvasHeadingText = '#17130f';
+const canvasBodyText = '#4f4338';
+const canvasMutedText = '#7b6d5f';
+const canvasImageEmptyFill = '#eadfce';
 const canvasCardRadius = 24;
 const canvasFootText = 'Made with Lambda Picks';
 
@@ -170,8 +170,8 @@ const canvasFootText = 'Made with Lambda Picks';
         function drawCanvasTheme(g, width, height) {
 
 const bg = g.createLinearGradient(0, 0, 0, height);
-bg.addColorStop(0, '#0b0d10');
-bg.addColorStop(1, '#141920');
+bg.addColorStop(0, '#f5f0e9');
+bg.addColorStop(1, '#ede3d4');
 g.fillStyle = bg;
 g.fillRect(0, 0, width, height);
 
@@ -180,23 +180,23 @@ g.fillRect(0, 0, width, height);
         function drawCanvasHeader(g, title, titleLines, padding, cardWidth, count) {
 
 roundRect(g, padding + 26, padding + 26, 194, 42, 21);
-g.fillStyle = '#eef3f8';
+g.fillStyle = '#17130f';
 g.fill();
-g.fillStyle = '#10141a';
+g.fillStyle = '#f6f1ea';
 g.font = '800 18px Inter, Arial, sans-serif';
 g.fillText('LAMBDA PICKS', padding + 44, padding + 53);
 
-g.fillStyle = '#f3f6fb';
-g.font = '700 46px Inter, Arial, sans-serif';
-let titleY = padding + 118;
+g.fillStyle = '#17130f';
+g.font = '700 48px Georgia, serif';
+let titleY = padding + 120;
 titleLines.forEach(line => {
   g.fillText(line, padding + 28, titleY);
   titleY += 58;
 });
 
-g.fillStyle = '#aab4c3';
+g.fillStyle = '#7a6c5e';
 g.font = '400 24px Inter, Arial, sans-serif';
-g.fillText(`${count} ${count === 1 ? 'item' : 'items'} · ready to share`, padding + 28, titleY + 12);
+g.fillText(`${count} ${count === 1 ? 'item' : 'items'} · curated export`, padding + 28, titleY + 12);
 
         }
 
@@ -207,9 +207,9 @@ const h = 28;
 g.font = '800 14px Inter, Arial, sans-serif';
 const w = g.measureText(text).width + padX * 2;
 roundRect(g, x, y, w, h, 14);
-g.fillStyle = '#eef3f8';
+g.fillStyle = '#17130f';
 g.fill();
-g.fillStyle = '#10141a';
+g.fillStyle = '#f6f1ea';
 g.fillText(text.toUpperCase(), x + padX, y + 19);
 
         }
