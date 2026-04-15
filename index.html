@@ -3,31 +3,31 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Lambda Picks — Merlot Signal</title>
+<title>Lambda Picks — Velvet Editorial</title>
 <style>
 :root {
-  --bg:radial-gradient(circle at top left,#3a1620 0,#0b0c10 50%),linear-gradient(180deg,#0b0a0d,#171419);
-  --panel:rgba(19,15,18,.94);
-  --line:rgba(255,246,240,.075);
-  --text:#f7f1ec;
-  --muted:#b49c96;
-  --soft:#edd8d1;
-  --field-bg:#140f13;
-  --field-line:rgba(255,246,240,.08);
-  --accent-bg:#f4e7df;
-  --accent-text:#1a1013;
-  --button-secondary:#301b22;
-  --button-ghost:#cfb3ad;
-  --danger:#ffd2cb;
-  --preview-bg:linear-gradient(180deg,#110d11,#0c0b0f);
+  --bg:radial-gradient(circle at top left,#2b1b1f 0,#0d0c10 50%),linear-gradient(180deg,#0c0b0c,#141215);
+  --panel:rgba(22,18,20,.93);
+  --line:rgba(255,240,228,.08);
+  --text:#f7f1ea;
+  --muted:#b8a295;
+  --soft:#ecddd0;
+  --field-bg:#171214;
+  --field-line:rgba(255,240,228,.08);
+  --accent-bg:#f4e7d9;
+  --accent-text:#1b120d;
+  --button-secondary:#2b221e;
+  --button-ghost:#d0b7a7;
+  --danger:#ffd2c6;
+  --preview-bg:linear-gradient(180deg,#120f11,#0e0d10);
   --preview-panel:rgba(255,255,255,.022);
-  --preview-line:rgba(255,246,240,.08);
-  --badge-bg:#f2e5dd;
-  --badge-text:#1a1013;
-  --brand-fill:#f6ebe3;
-  --brand-text:#1a1013;
-  --brand-border:rgba(255,246,240,.14);
-  --title-size:58px;
+  --preview-line:rgba(255,240,228,.08);
+  --badge-bg:#f2e3d1;
+  --badge-text:#1a120d;
+  --brand-fill:#f5eadf;
+  --brand-text:#1a120d;
+  --brand-border:rgba(255,240,228,.14);
+  --title-size:56px;
   --hero-brand-size:16px;
 }
 *{box-sizing:border-box}
@@ -122,13 +122,12 @@ body{font-feature-settings:"ss01" 1}
 .badge{border-radius:12px}
 
 
-body{font-feature-settings:"ss01" 1, "liga" 1}
-.panel{box-shadow:0 30px 100px rgba(0,0,0,.34)}
-.brand-mark,.board-brand{border-radius:999px;padding:9px 15px;box-shadow:0 12px 32px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.22)}
-.board-title,.draft-title,.share-name{font-family:Georgia,"Times New Roman",serif;font-weight:700;letter-spacing:-.05em}
+.panel{box-shadow:0 34px 88px rgba(0,0,0,.33)}
+.brand-mark,.board-brand{border-radius:999px;padding:9px 14px;box-shadow:0 10px 24px rgba(0,0,0,.14), inset 0 1px 0 rgba(255,255,255,.2)}
+.board-title,.draft-title,.share-name{font-family:Georgia,"Times New Roman",serif;font-weight:700;letter-spacing:-.047em}
 .hero-copy,.draft-reason,.share-reason,.board-sub{font-family:Georgia,"Times New Roman",serif}
-.share-item,.draft-item,.form-block{background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.014))}
-.badge{border-radius:999px;box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+.share-board::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 85% 10%, rgba(168,110,93,.08), transparent 28%), linear-gradient(145deg, rgba(255,255,255,.02), transparent 50%);pointer-events:none}
+.field-card,.draft-item,.share-item{box-shadow:inset 0 1px 0 rgba(255,255,255,.02)}
 
 </style>
 </head>
@@ -223,22 +222,22 @@ body{font-feature-settings:"ss01" 1, "liga" 1}
 
 <script>
 const THEME = {
-  storageSuffix: "merlot_signal",
-  export_bg_top: "#110d11",
-  export_bg_bottom: "#19131a",
-  export_panel_fill: "rgba(255,255,255,.022)",
-  export_panel_stroke: "rgba(255,246,240,.08)",
-  export_card_fill: "rgba(255,255,255,.025)",
-  export_card_stroke: "rgba(255,246,240,.08)",
-  export_heading: "#f7f1ec",
-  export_body: "#dccfca",
-  export_muted: "#b29994",
-  export_empty: "#1a1316",
-  export_badge_bg: "#f2e5dd",
-  export_badge_text: "#1a1013",
-  export_brand_bg: "#f6ebe3",
-  export_brand_text: "#1a1013",
-  export_brand_line: "rgba(255,246,240,.14)"
+  storageSuffix: "velvet_editorial",
+  export_bg_top: "#120f11",
+  export_bg_bottom: "#171317",
+  export_panel_fill: "rgba(255,248,240,.022)",
+  export_panel_stroke: "rgba(255,240,228,.08)",
+  export_card_fill: "rgba(255,248,240,.024)",
+  export_card_stroke: "rgba(255,240,228,.08)",
+  export_heading: "#f7f1ea",
+  export_body: "#dcccbe",
+  export_muted: "#b39f92",
+  export_empty: "#1b1513",
+  export_badge_bg: "#f2e3d1",
+  export_badge_text: "#1a120d",
+  export_brand_bg: "#f5eadf",
+  export_brand_text: "#1a120d",
+  export_brand_line: "rgba(255,240,228,.14)"
 };
 const STORAGE_KEY = '__lambda_picks_refresh__' + THEME.storageSuffix;
 const DEMO_MODE = new URLSearchParams(location.search).get('demo') === '1';
